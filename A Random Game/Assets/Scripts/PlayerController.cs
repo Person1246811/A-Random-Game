@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float hp;
     public float death;
 
+    public bool speedBoost;
+    public bool canFly;
+
     //Variable for mouse angle
     private float angle = 0;
 
@@ -48,16 +51,18 @@ public class PlayerController : MonoBehaviour
         //Basic controls
         Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
         Vector2 velocity = myRB.velocity;
-        if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance))
+        float moveInputX = (speedBoost ? speed * 2 : speed) * Input.GetAxisRaw("Horizontal");
+        if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || canFly)
         {
-            velocity.x = Input.GetAxisRaw("Horizontal") * speed;
+            velocity.x = moveInputX;
             if (Input.GetKeyDown(KeyCode.Space))
                 velocity.y = jumpHeight;
         }
         else
         {
-            if (Input.GetAxisRaw("Horizontal") * myRB.velocity.x != Mathf.Abs(Input.GetAxisRaw("Horizontal")* myRB.velocity.x))
-                velocity.x += Input.GetAxisRaw("Horizontal") * speed * 2 * Time.deltaTime;
+            float moveDirection = Input.GetAxisRaw("Horizontal") * myRB.velocity.x;
+            if (moveDirection != Mathf.Abs(moveDirection))
+                velocity.x += moveInputX * 2 * Time.deltaTime;
         }
         myRB.velocity = velocity;
         Debug.DrawRay(groundDetection, Vector2.down);

@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
         //If the enemy falls below the death number it dies
         if (transform.position.y <= death)
-            hp--;
+            hp = 0;
 
         //When the player has less than or equal to 0 hp, the player gets disabled
         if (hp <= 0)

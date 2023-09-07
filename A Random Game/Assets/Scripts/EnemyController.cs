@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     public float range;
     public float speed;
+    public float hp;
     public float death;
 
     //Jump variables
@@ -80,7 +81,7 @@ public class EnemyController : MonoBehaviour
         }
 
         //If the enemy falls below the death number it dies
-        if (transform.position.y <= death)
+        if (transform.position.y <= death || hp <= 0)
             Destroy(gameObject);
 
         //Makes the velocity the temp velocity
@@ -93,7 +94,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerBullet")
         {
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            hp--;
         }
     }
 }

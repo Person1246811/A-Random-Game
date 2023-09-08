@@ -12,14 +12,19 @@ public class PlayerController : MonoBehaviour
     public float hp;
     public float death;
 
+    //Player Select Variables
+    public int playerSelect;
+
+    //Power ups
+    private float powerTimer;
     public bool speedBoost;
     public bool canFly;
+    public bool canGrapple;
 
     //Variable for mouse angle
     private float angle = 0;
 
     //Grapple Variables
-    public bool canGrapple;
     public Camera mainCamera;
     public LineRenderer line;
     public SpringJoint2D joint;
@@ -30,9 +35,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
 
     //Bullet Variables
-    public GameObject bullet;
     public float bulletSpeed;
     public float bulletLifespan;
+
+    public GameObject bullet;
+    public GameObject car;
+    public GameObject orbital;
+    public GameObject rollingPin;
+    public GameObject meleeRotation;
+
+    private float pinTimer;
 
     //Bullet counters and canshoot
     private bool canShoot = true;
@@ -43,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         //Assigns myRB to the players rigidbody
         myRB = GetComponent<Rigidbody2D>();
+        playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
     }
 
     // Update is called once per frame
@@ -78,6 +91,63 @@ public class PlayerController : MonoBehaviour
         //rotation towards mouse
         angle = (Mathf.Atan2(distance.x, distance.y) * Mathf.Rad2Deg) + 180;
 
+        meleeRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
+        if (Input.GetKey(KeyCode.Mouse0) && canShoot)
+        {
+            //Banana and car
+            if (playerSelect == 1 || playerSelect == 2)
+            {
+                GameObject b = Instantiate(playerSelect == 1 ? bullet : car, transform.position, Quaternion.Euler(0, 0, angle));
+                b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
+                b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
+                canShoot = false;
+                Destroy(b, playerSelect == 1 ? bulletLifespan : bulletLifespan * 1.8f);
+            }
+            //Orbital
+            if (playerSelect == 3)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(new Vector3(0, 10, 0) + mousePos, Vector2.down, 15, tileMapFilter);
+                if (hit)
+                {
+                    Vector2 strikePoint = new Vector2(mousePos.x, hit.transform.position.y);
+                    GameObject b = Instantiate(orbital, new Vector2(0, 5) + strikePoint, Quaternion.identity);
+                    b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
+                    b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
+                    canShoot = false;
+                    Destroy(b, bulletLifespan);
+                }
+            }
+            //Rolling pin
+            if (playerSelect == 4)
+            {
+                rollingPin.SetActive(true);
+                pinTimer = fireRate * .5f;
+                canShoot = false;
+            }
+        }
+
+        //The countdown until the player can shoot again
+        else if (!canShoot)
+        {
+            fireCountdown += Time.deltaTime;
+            if (fireCountdown >= fireRate)
+            {
+                fireCountdown = 0;
+                canShoot = true;
+                rollingPin.SetActive(false);
+            }
+        }
+
+        if (rollingPin.activeSelf)
+        {
+            if (pinTimer >= 0)
+                pinTimer -= Time.deltaTime;
+            else
+                rollingPin.SetActive(false);
+        }
+
         //Finds the direction in which the raycast needs to go
         direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
@@ -105,24 +175,13 @@ public class PlayerController : MonoBehaviour
             joint.enabled = false;
         }
 
-        //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
-        if (Input.GetKey(KeyCode.Mouse0) && canShoot)
+        if (powerTimer >= 0)
+            powerTimer -= Time.deltaTime;
+        else
         {
-            GameObject b = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
-            b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * bulletSpeed);
-            canShoot = false;
-            Destroy(b, bulletLifespan);
-        }
-
-        //The countdown until the player can shoot again
-        else if (!canShoot)
-        {
-            fireCountdown += Time.deltaTime;
-            if (fireCountdown >= fireRate)
-            {
-                fireCountdown = 0;
-                canShoot = true;
-            }
+            canFly = false;
+            canGrapple = false;
+            speedBoost = false;
         }
 
         //If the enemy falls below the death number it dies
@@ -144,6 +203,31 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             hp--;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!canFly && !canGrapple && !speedBoost)
+        { 
+            if (collision.gameObject.tag == "WingsItem")
+            {
+                Destroy(collision.gameObject);
+                canFly = true;
+                powerTimer = 8;
+            }
+            if (collision.gameObject.tag == "GrappleItem")
+            {
+                Destroy(collision.gameObject);
+                canGrapple = true;
+                powerTimer = 8;
+            }
+            if (collision.gameObject.tag == "SpeedItem")
+            {
+                Destroy(collision.gameObject);
+                speedBoost = true;
+                powerTimer = 8;
+            } 
         }
     }
 }

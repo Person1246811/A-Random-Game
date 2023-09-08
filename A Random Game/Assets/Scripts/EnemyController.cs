@@ -97,4 +97,12 @@ public class EnemyController : MonoBehaviour
             hp--;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "PlayerBullet")
+            hp--;
+        if (collision.gameObject.tag == "Orbital")
+            hp = 0;
+    }
 }

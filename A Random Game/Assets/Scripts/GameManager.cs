@@ -7,17 +7,25 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    //Menu
     public int playerSelect;
     public int gameSelect;
     public TextMeshProUGUI gameText;
+    public Image playerImage;
+
+    //Pause
+    public bool paused;
+    public GameObject pauseMenu;
+
+    //Map
     public int[] mapGen;
     public GameObject[] mapSeeds;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerSelect = PlayerPrefs.GetInt("playerSelect", 0);
-        gameSelect = PlayerPrefs.GetInt("gameSelect", 0);
+        playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
+        gameSelect = PlayerPrefs.GetInt("gameSelect", 3);
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             Generate();
@@ -30,6 +38,32 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             gameText.text = "" + gameSelect;
+            if (playerSelect == 1)
+                playerImage.color = Color.black;
+            else if (playerSelect == 2)
+                playerImage.color = Color.red;
+            else if (playerSelect == 3)
+                playerImage.color = Color.blue;
+            else if (playerSelect == 4)
+                playerImage.color = Color.white;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            { 
+                if (paused)
+                {
+                    paused = false;
+                    pauseMenu.SetActive(false);
+                    Time.timeScale = 1;
+                }
+                else
+                {
+                    paused = true;
+                    pauseMenu.SetActive(true);
+                    Time.timeScale = 0;
+                }
+            }
         }
     }
 
@@ -40,17 +74,20 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("playerSelect", playerSelect);
             PlayerPrefs.SetInt("gameSelect", gameSelect);
         }
+        Time.timeScale = 1;
         SceneManager.LoadScene(num);
     }
 
     public void PlayerSelect(int amount)
     {
-        playerSelect += amount;
+        if (playerSelect + amount >= 1 && playerSelect + amount <= 4)
+            playerSelect += amount;
     }
 
     public void GameSelect(int amount)
     {
-        gameSelect += amount;
+        if (gameSelect + amount >= 3)
+            gameSelect += amount;
     }
 
     public void Generate()

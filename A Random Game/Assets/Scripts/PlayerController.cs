@@ -9,8 +9,12 @@ public class PlayerController : MonoBehaviour
     public float groundDetectDistance = .1f;
     public float jumpHeight;
     public float speed;
+    private float maxhp = 3;
     public float hp;
+    public GameObject healthGreen;
+    public GameObject healthRed;
     public float death;
+    public int score;
 
     //Player Select Variables
     public int playerSelect;
@@ -26,8 +30,8 @@ public class PlayerController : MonoBehaviour
 
     //Grapple Variables
     public Camera mainCamera;
-    public LineRenderer line;
-    public SpringJoint2D joint;
+    private LineRenderer line;
+    private SpringJoint2D joint;
     public GameObject grapplePos;
     public LayerMask tileMapFilter;
     public float jointSpeed;
@@ -38,24 +42,29 @@ public class PlayerController : MonoBehaviour
     public float bulletSpeed;
     public float bulletLifespan;
 
+    //Bullet counters and canshoot
+    private bool canShoot = true;
+    private float fireCountdown = 0;
+    public float fireRate;
+
+    //bullets
     public GameObject bullet;
     public GameObject car;
     public GameObject orbital;
     public GameObject rollingPin;
     public GameObject meleeRotation;
 
+    //rolling pin active timer
     private float pinTimer;
-
-    //Bullet counters and canshoot
-    private bool canShoot = true;
-    private float fireCountdown = 0;
-    public float fireRate;
 
     void Start()
     {
         //Assigns myRB to the players rigidbody
         myRB = GetComponent<Rigidbody2D>();
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
+        line = GetComponent<LineRenderer>();
+        joint = GetComponent<SpringJoint2D>();
+        hp = maxhp;
     }
 
     // Update is called once per frame
@@ -182,6 +191,20 @@ public class PlayerController : MonoBehaviour
             canFly = false;
             canGrapple = false;
             speedBoost = false;
+        }
+
+        //hp bar
+        if (hp == maxhp)
+        {
+            healthGreen.SetActive(false);
+            healthRed.SetActive(false);
+        }
+        else
+        {
+            Vector3 redTransform = healthRed.transform.localScale;
+            healthGreen.transform.localScale = new Vector3((hp / maxhp) * redTransform.x, redTransform.y, redTransform.z);
+            healthGreen.SetActive(true);
+            healthRed.SetActive(true);
         }
 
         //If the enemy falls below the death number it dies

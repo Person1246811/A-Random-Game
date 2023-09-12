@@ -7,19 +7,27 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    //player
+    private GameObject player;
+
     //Menu
     public int playerSelect;
     public int gameSelect;
     public TextMeshProUGUI gameText;
     public Image playerImage;
 
+    //Ui
+    private float timer;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI scoreText;
+
     //Pause
     public bool paused;
     public GameObject pauseMenu;
 
     //Map
-    public int[] mapGen;
-    public GameObject[] mapSeeds;
+    public Grid grid;
+    public GameObject[] mapGen, enemies;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,8 @@ public class GameManager : MonoBehaviour
         gameSelect = PlayerPrefs.GetInt("gameSelect", 3);
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
+            player = GameObject.FindGameObjectWithTag("Player");
+            timer = 30 * gameSelect;
             Generate();
         }
     }
@@ -49,6 +59,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            timer -= Time.deltaTime;
+            timerText.text = "" + Mathf.RoundToInt(timer);
+            scoreText.text = "" + player.GetComponent<PlayerController>().score;
             if (Input.GetKeyDown(KeyCode.Escape))
             { 
                 if (paused)
@@ -92,16 +105,20 @@ public class GameManager : MonoBehaviour
 
     public void Generate()
     {
-        Debug.Log("Generating Seeds");
-        mapGen = new int[gameSelect];
-        for (int i = 0; i < gameSelect; i++)
-            mapGen[i] = Random.Range(0, 6);
         Debug.Log("Generating Terrain");
         Vector2 location = Vector2.zero;
         for (int i = 0;  i < gameSelect; i++)
         {
-            Instantiate(mapSeeds[mapGen[i]], location, Quaternion.identity);
-            location += new Vector2(10, 0);
+            Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, 6)], location, Quaternion.identity, grid.transform);
+            location += new Vector2(20, 0);
         }
+        Debug.Log("Spawning Enemies");
+        float posX = 20;
+        /*for (int i = 0; i < gameSelect * Random.Range(1f, 2f); i++)
+        {
+            Vector2 spawnPos = new Vector2(Random.Range(posX + 1, posX + 15), 10);
+            Instantiate(enemies[Random.Range(0, 3)], spawnPos, Quaternion.identity);
+            posX = spawnPos.x;
+        }*/
     }
 }

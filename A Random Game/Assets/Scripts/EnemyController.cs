@@ -9,7 +9,10 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     public float range;
     public float speed;
+    private float maxhp = 2;
     public float hp;
+    public GameObject healthGreen;
+    public GameObject healthRed;
     public float death;
 
     //Jump variables
@@ -36,6 +39,7 @@ public class EnemyController : MonoBehaviour
         //Assigns the enemies rigidbody and the players position
         RB = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
+        hp = maxhp;
     }
 
     void Update()
@@ -80,9 +84,26 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        //hp bar
+        if (hp == maxhp)
+        {
+            healthGreen.SetActive(false);
+            healthRed.SetActive(false);
+        }
+        else
+        {
+            Vector3 redTransform = healthRed.transform.localScale;
+            healthGreen.transform.localScale = new Vector3((hp / maxhp) * redTransform.x, redTransform.y, redTransform.z);
+            healthGreen.SetActive(true);
+            healthRed.SetActive(true);
+        }
+
         //If the enemy falls below the death number it dies
         if (transform.position.y <= death || hp <= 0)
+        {
+            player.GetComponent<PlayerController>().score++;
             Destroy(gameObject);
+        }
 
         //Makes the velocity the temp velocity
         RB.velocity = velocity;
@@ -102,6 +123,13 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerBullet")
             hp--;
+        if (collision.gameObject.tag == "CarBullet")
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+            collision.gameObject.GetComponentsInChildren<SpriteRenderer>()[1].enabled = true;
+            collision.gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
+            hp--;
+        }
         if (collision.gameObject.tag == "Orbital")
             hp = 0;
     }

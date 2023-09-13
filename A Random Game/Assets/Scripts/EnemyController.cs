@@ -52,10 +52,10 @@ public class EnemyController : MonoBehaviour
         if (transform.position.x - player.transform.position.x <= range)
         {
             //Makes the enemy move towards the player
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, type == 0 ? transform.position.y : player.transform.position.y), speed * Time.deltaTime);
 
             //if the enemy hits the ground and a wall it jumps
-            if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) &&
+            if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) && type == 0 &&
                ((Physics2D.Raycast(transform.position, Vector2.left, detectRange, envlayer) || (Physics2D.Raycast(transform.position, Vector2.right, detectRange, envlayer)))))
                 velocity.y = jumpPower;
         }
@@ -99,7 +99,7 @@ public class EnemyController : MonoBehaviour
             healthRed.SetActive(true);
         }
 
-        //If the enemy falls below the death number it dies
+        //If the enemy falls below the death number it dies and adds +1 score to the player
         if (transform.position.y <= death || hp <= 0)
         {
             player.GetComponent<PlayerController>().score++;
@@ -112,7 +112,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //When the enemy collides with a player bullet it dies and destroys the bullet
+        //When the enemy collides with a player bullet it takes damage and destroys the bullet
         if (collision.gameObject.tag == "PlayerBullet")
         {
             Destroy(collision.gameObject);
@@ -122,8 +122,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //takes damage when the enemy touches the rolling pin
         if (collision.gameObject.tag == "PlayerBullet")
             hp--;
+        //When a car bullet hits the enemy it freezes, changes sprite, then expands, and also hurts the enemy
         if (collision.gameObject.tag == "CarBullet")
         {
             collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
@@ -131,6 +133,7 @@ public class EnemyController : MonoBehaviour
             collision.gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
             hp--;
         }
+        //kills the enemy when it touches the orbital laser
         if (collision.gameObject.tag == "Orbital")
             hp = 0;
     }

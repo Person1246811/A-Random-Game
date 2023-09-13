@@ -6,6 +6,7 @@ public class Terrain : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //When a car bullet hits the terrain it freezes, changes sprite, then expands
         if (collision.gameObject.tag == "CarBullet")
         {
             collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
@@ -16,7 +17,7 @@ public class Terrain : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //When the enemy collides with a player bullet it dies and destroys the bullet
+        //When the bullets hits the terrain it gets destroyed
         if (collision.gameObject.tag == "PlayerBullet")
             Destroy(collision.gameObject);
 

@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + 1, posX + 15), 12), Vector2.down, 22, tileMapFilter);
             if (hit)
             {
-                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + Vector2.up, Quaternion.identity);
+                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 3), Quaternion.identity);
                 posX = hit.point.x + 3;
             }
         }

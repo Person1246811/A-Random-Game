@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundDetectDistance: 0.1
-  jumpHeight: 7
+  jumpHeight: 8
   speed: 5
   hp: 3
   healthGreen: {fileID: 843858200}

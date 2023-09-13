@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         //Basic controls
         Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
         Vector2 velocity = myRB.velocity;
-        float moveInputX = (speedBoost ? speed * 2 : speed) * Input.GetAxisRaw("Horizontal");
+        float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
         if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || canFly)
         {
             velocity.x = moveInputX;

@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 6332217579720353369}
   m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,6 +328,7 @@ MonoBehaviour:
   healthGreen: {fileID: 418502115161473644}
   healthRed: {fileID: 338019170348888851}
   death: -25
+  type: 0
   envlayer:
     serializedVersion: 2
     m_Bits: 128

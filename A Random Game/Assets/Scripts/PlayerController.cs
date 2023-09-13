@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healthGreen;
     public GameObject healthRed;
     public float death;
+    private float hurtTimer;
     public int score;
 
     //Player Select Variables
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             float moveDirection = Input.GetAxisRaw("Horizontal") * myRB.velocity.x;
-            if (moveDirection != Mathf.Abs(moveDirection))
+            if (moveDirection != Mathf.Abs(moveDirection) || Mathf.Abs(velocity.x) < speed)
                 velocity.x += moveInputX * 2 * Time.deltaTime;
         }
         myRB.velocity = velocity;
@@ -117,10 +118,10 @@ public class PlayerController : MonoBehaviour
             //Orbital
             if (playerSelect == 3)
             {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector3(0, 10, 0) + mousePos, Vector2.down, 15, tileMapFilter);
+                RaycastHit2D hit = Physics2D.Raycast(new Vector3(mousePos.x, 12, mousePos.z), Vector2.down, 22, tileMapFilter);
                 if (hit)
                 {
-                    Vector2 strikePoint = new Vector2(mousePos.x, hit.transform.position.y);
+                    Vector2 strikePoint = new Vector2(mousePos.x, hit.point.y);
                     GameObject b = Instantiate(orbital, new Vector2(0, 5) + strikePoint, Quaternion.identity);
                     b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
                     b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
@@ -207,6 +208,9 @@ public class PlayerController : MonoBehaviour
             healthRed.SetActive(true);
         }
 
+        if (hurtTimer >= 0)
+            hurtTimer -= Time.deltaTime;
+
         //If the enemy falls below the death number it dies
         if (transform.position.y <= death)
             hp = 0;
@@ -226,6 +230,15 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             hp--;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" && hurtTimer <= 0)
+        {
+            hp--;
+            hurtTimer = .5f;
         }
     }
 

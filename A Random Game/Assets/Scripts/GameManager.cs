@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     //Ui
     private float timer;
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI scoreText;
 
     //Pause
     public bool paused;
@@ -27,13 +26,14 @@ public class GameManager : MonoBehaviour
 
     //Map
     public Grid grid;
-    public GameObject[] mapGen, enemies;
+    public GameObject[] mapGen, enemies, items;
+    public LayerMask tileMapFilter;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
-        gameSelect = PlayerPrefs.GetInt("gameSelect", 3);
+        gameSelect = PlayerPrefs.GetInt("gameSelect", 5);
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -60,8 +60,9 @@ public class GameManager : MonoBehaviour
         else
         {
             timer -= Time.deltaTime;
-            timerText.text = "" + Mathf.RoundToInt(timer);
-            scoreText.text = "" + player.GetComponent<PlayerController>().score;
+            int min = Mathf.RoundToInt(timer) / 60;
+            int sec = Mathf.RoundToInt(timer) % 60;
+            timerText.text = min + ":" + (sec < 10 ? "0" + sec : sec);
             if (Input.GetKeyDown(KeyCode.Escape))
             { 
                 if (paused)
@@ -99,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void GameSelect(int amount)
     {
-        if (gameSelect + amount >= 3)
+        if (gameSelect + amount >= 5)
             gameSelect += amount;
     }
 
@@ -109,16 +110,30 @@ public class GameManager : MonoBehaviour
         Vector2 location = Vector2.zero;
         for (int i = 0;  i < gameSelect; i++)
         {
-            Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, 6)], location, Quaternion.identity, grid.transform);
+            Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)], location, Quaternion.identity, grid.transform);
             location += new Vector2(20, 0);
         }
         Debug.Log("Spawning Enemies");
-        float posX = 20;
-        /*for (int i = 0; i < gameSelect * Random.Range(1f, 2f); i++)
+        float posX = 10;
+        for (int i = 0; i < gameSelect * Random.Range(1f, 2f); i++)
         {
-            Vector2 spawnPos = new Vector2(Random.Range(posX + 1, posX + 15), 10);
-            Instantiate(enemies[Random.Range(0, 3)], spawnPos, Quaternion.identity);
-            posX = spawnPos.x;
-        }*/
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + 1, posX + 15), 12), Vector2.down, 22, tileMapFilter);
+            if (hit)
+            {
+                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + Vector2.up, Quaternion.identity);
+                posX = hit.point.x + 3;
+            }
+        }
+        Debug.Log("Spawning Items");
+        float itemposX = 10;
+        for (int i = 0; i < gameSelect * Random.Range(.5f, 1f); i++)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + 1, itemposX + 15), 12), Vector2.down, 22, tileMapFilter);
+            if (hit)
+            {
+                Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity);
+                itemposX = hit.point.x + gameSelect * 1.5f;
+            }
+        }
     }
 }

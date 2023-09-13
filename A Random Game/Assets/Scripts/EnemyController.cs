@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     public GameObject healthGreen;
     public GameObject healthRed;
     public float death;
+    public int type;
 
     //Jump variables
     public LayerMask envlayer;

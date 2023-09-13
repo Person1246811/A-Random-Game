@@ -632,13 +632,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSelect: 1
-  gameSelect: 3
+  gameSelect: 5
   gameText: {fileID: 1576988164}
   playerImage: {fileID: 402887077}
+  timerText: {fileID: 0}
+  scoreText: {fileID: 0}
   paused: 0
   pauseMenu: {fileID: 0}
-  mapGen: 
-  mapSeeds: []
+  grid: {fileID: 0}
+  mapGen: []
+  enemies: []
+  items: []
+  tileMapFilter:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &1204704058
 Transform:
   m_ObjectHideFlags: 0

@@ -13,4 +13,14 @@ public class Terrain : MonoBehaviour
             collision.gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //When the enemy collides with a player bullet it dies and destroys the bullet
+        if (collision.gameObject.tag == "PlayerBullet")
+            Destroy(collision.gameObject);
+
+        if (collision.gameObject.tag == "EnemyBullet")
+            Destroy(collision.gameObject);
+    }
 }

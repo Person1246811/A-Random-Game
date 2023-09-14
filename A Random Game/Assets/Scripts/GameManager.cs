@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     public Grid grid;
     public GameObject[] mapGen, enemies, items;
     public LayerMask tileMapFilter;
+    public Tile[] tiles;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            gameText.text = "" + gameSelect;
+            gameText.text = "" + (gameSelect - 2);
             if (playerSelect == 1)
                 playerImage.color = Color.black;
             else if (playerSelect == 2)
@@ -110,30 +112,30 @@ public class GameManager : MonoBehaviour
         Vector2 location = Vector2.zero;
         for (int i = 0;  i < gameSelect; i++)
         {
-            Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)], location, Quaternion.identity, grid.transform);
-            location += new Vector2(20, 0);
+            GameObject t = Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)], location, Quaternion.identity, grid.transform);
+            if (i != 0 && i != gameSelect - 1)
+                t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[Random.Range(1, tiles.Length)]);
+            location += new Vector2(t.GetComponent<Tilemap>().size.x, 0);
         }
+
         Debug.Log("Spawning Enemies");
         float posX = 10;
-        for (int i = 0; i < gameSelect * Random.Range(1f, 2f); i++)
+        for (int i = 0; i < gameSelect * 2; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + 1, posX + 15), 12), Vector2.down, 22, tileMapFilter);
             if (hit)
-            {
                 Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 3), Quaternion.identity);
-                posX = hit.point.x + 3;
-            }
+            posX = hit.point.x + 3;
         }
+
         Debug.Log("Spawning Items");
         float itemposX = 10;
-        for (int i = 0; i < gameSelect * Random.Range(.5f, 1f); i++)
+        for (int i = 0; i < gameSelect; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + 1, itemposX + 15), 12), Vector2.down, 22, tileMapFilter);
             if (hit)
-            {
                 Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity);
-                itemposX = hit.point.x + gameSelect * 1.5f;
-            }
+            itemposX = hit.point.x + gameSelect * 1.7f;
         }
     }
 }

@@ -1172,6 +1172,12 @@ MonoBehaviour:
   tileMapFilter:
     serializedVersion: 2
     m_Bits: 128
+  tiles:
+  - {fileID: 11400000, guid: edeb8d5915155a24a8e5238b37e7d239, type: 2}
+  - {fileID: 11400000, guid: 9824671a7e2a1a645b64a08762f8bea3, type: 2}
+  - {fileID: 11400000, guid: 3cde8450b4491c846a96786eb5e4e197, type: 2}
+  - {fileID: 11400000, guid: ef066580548e0cf47839b691e4bb4a52, type: 2}
+  - {fileID: 11400000, guid: 877f4d92dcaeffa4d8d7af685df62502, type: 2}
 --- !u!4 &1559296691
 Transform:
   m_ObjectHideFlags: 0

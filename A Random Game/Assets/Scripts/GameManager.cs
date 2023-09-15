@@ -50,14 +50,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             gameText.text = "" + (gameSelect - 2);
-            if (playerSelect == 1)
-                playerImage.color = Color.black;
-            else if (playerSelect == 2)
-                playerImage.color = Color.red;
-            else if (playerSelect == 3)
-                playerImage.color = Color.blue;
-            else if (playerSelect == 4)
-                playerImage.color = Color.white;
+            playerImage.GetComponent<Animator>().SetInteger("State", playerSelect + 1);
         }
         else
         {
@@ -125,7 +118,7 @@ public class GameManager : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + 1, posX + 15), 12), Vector2.down, 22, tileMapFilter);
             if (hit)
                 Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 3), Quaternion.identity);
-            posX = hit.point.x + 3;
+            posX = hit.point.x + 2;
         }
 
         Debug.Log("Spawning Items");

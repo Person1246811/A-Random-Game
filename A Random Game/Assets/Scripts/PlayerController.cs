@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Basic variables
+    private Animator anim;
     private Rigidbody2D myRB;
     public float groundDetectDistance = .1f;
     public float jumpHeight;
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //Assigns myRB to the players rigidbody
+        anim = GetComponent<Animator>();
         myRB = GetComponent<Rigidbody2D>();
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
         line = GetComponent<LineRenderer>();
@@ -79,7 +80,10 @@ public class PlayerController : MonoBehaviour
         {
             velocity.x = moveInputX;
             if (Input.GetKeyDown(KeyCode.Space))
+            { 
+                anim.Play("FishJump");
                 velocity.y = jumpHeight;
+            }
         }
         else
         {
@@ -88,6 +92,7 @@ public class PlayerController : MonoBehaviour
                 velocity.x += moveInputX * 2 * Time.deltaTime;
         }
         myRB.velocity = velocity;
+        anim.SetBool("Walking", Mathf.Abs(myRB.velocity.x) >= .2f ? true : false); 
         Debug.DrawRay(groundDetection, Vector2.down);
         if (myRB.velocity.x > .1)
             transform.rotation = new Quaternion(0, 0, 0, 0);

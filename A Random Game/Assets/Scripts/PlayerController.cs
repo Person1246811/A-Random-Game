@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         myRB = GetComponent<Rigidbody2D>();
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
+        anim.SetInteger("Player", playerSelect - 1);
         line = GetComponent<LineRenderer>();
         joint = GetComponent<SpringJoint2D>();
         hp = maxhp;
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             { 
                 anim.Play("FishJump");
+                GetComponents<AudioSource>()[1].Play();
                 velocity.y = jumpHeight;
             }
         }
@@ -92,7 +94,17 @@ public class PlayerController : MonoBehaviour
                 velocity.x += moveInputX * 2 * Time.deltaTime;
         }
         myRB.velocity = velocity;
-        anim.SetBool("Walking", Mathf.Abs(myRB.velocity.x) >= .2f ? true : false); 
+        if (Mathf.Abs(myRB.velocity.x) >= .2f)
+        {
+            anim.SetBool("Walking", true);
+            if (!GetComponents<AudioSource>()[0].isPlaying)
+                GetComponents<AudioSource>()[0].Play();
+        }
+        else
+        {
+            anim.SetBool("Walking", false);
+            GetComponents<AudioSource>()[0].Stop();
+        }
         Debug.DrawRay(groundDetection, Vector2.down);
         if (myRB.velocity.x > .1)
             transform.rotation = new Quaternion(0, 0, 0, 0);

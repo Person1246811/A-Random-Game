@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             gameText.text = "" + (gameSelect - 2);
-            playerImage.GetComponent<Animator>().SetInteger("State", playerSelect + 1);
+            playerImage.GetComponent<Animator>().SetInteger("State", playerSelect - 1);
+            playerImage.SetNativeSize();
         }
         else
         {

@@ -73,170 +73,174 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Basic controls
-        Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
-        Vector2 velocity = myRB.velocity;
-        float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
-        if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || canFly)
+        if (Time.timeScale != 0)
         {
-            velocity.x = moveInputX;
-            if (Input.GetKeyDown(KeyCode.Space))
-            { 
-                anim.Play("FishJump");
-                GetComponents<AudioSource>()[1].Play();
-                velocity.y = jumpHeight;
-            }
-        }
-        else
-        {
-            float moveDirection = Input.GetAxisRaw("Horizontal") * myRB.velocity.x;
-            if (moveDirection != Mathf.Abs(moveDirection) || Mathf.Abs(velocity.x) < speed)
-                velocity.x += moveInputX * 2 * Time.deltaTime;
-        }
-        myRB.velocity = velocity;
-        if (Mathf.Abs(myRB.velocity.x) >= .2f)
-        {
-            anim.SetBool("Walking", true);
-            if (!GetComponents<AudioSource>()[0].isPlaying)
-                GetComponents<AudioSource>()[0].Play();
-        }
-        else
-        {
-            anim.SetBool("Walking", false);
-            GetComponents<AudioSource>()[0].Stop();
-        }
-        Debug.DrawRay(groundDetection, Vector2.down);
-        if (myRB.velocity.x > .1)
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-        else if (myRB.velocity.x < -.1)
-            transform.rotation = new Quaternion(0, 180, 0, 0);
-
-        //mousePos on screen
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector2 distance = new Vector2(transform.position.y - mousePos.y, transform.position.x - mousePos.x);
-        //rotation towards mouse
-        angle = (Mathf.Atan2(distance.x, distance.y) * Mathf.Rad2Deg) + 180;
-
-        meleeRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
-        if (Input.GetKey(KeyCode.Mouse0) && canShoot)
-        {
-            //Banana and car
-            if (playerSelect == 1 || playerSelect == 2)
+            //Basic controls
+            Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - .6f);
+            Vector2 velocity = myRB.velocity;
+            float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
+            Debug.DrawRay(groundDetection, Vector2.down);
+            if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || canFly)
             {
-                GameObject b = Instantiate(playerSelect == 1 ? bullet : car, transform.position, Quaternion.Euler(0, 0, angle));
-                b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
-                b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
-                canShoot = false;
-                Destroy(b, playerSelect == 1 ? bulletLifespan : bulletLifespan * 1.8f);
-            }
-            //Orbital
-            if (playerSelect == 3)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector3(mousePos.x, 12, mousePos.z), Vector2.down, 22, tileMapFilter);
-                if (hit)
+                velocity.x = moveInputX;
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Vector2 strikePoint = new Vector2(mousePos.x, hit.point.y);
-                    GameObject b = Instantiate(orbital, new Vector2(0, 5) + strikePoint, Quaternion.identity);
-                    b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
-                    b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
-                    canShoot = false;
-                    Destroy(b, bulletLifespan);
+                    velocity.y = jumpHeight;
+                    anim.SetTrigger("Jump");
+                    GetComponents<AudioSource>()[1].Play();
                 }
             }
-            //Rolling pin
-            if (playerSelect == 4)
-            {
-                rollingPin.SetActive(true);
-                pinTimer = fireRate * .5f;
-                canShoot = false;
-            }
-        }
-
-        //The countdown until the player can shoot again
-        else if (!canShoot)
-        {
-            fireCountdown += Time.deltaTime;
-            if (fireCountdown >= fireRate)
-            {
-                fireCountdown = 0;
-                canShoot = true;
-                rollingPin.SetActive(false);
-            }
-        }
-
-        if (rollingPin.activeSelf)
-        {
-            if (pinTimer >= 0)
-                pinTimer -= Time.deltaTime;
             else
-                rollingPin.SetActive(false);
-        }
-
-        //Finds the direction in which the raycast needs to go
-        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
-        //Sets the position of the line to the correct position
-        line.SetPosition(0, grapplePos.transform.position);
-        //Detects if the grapple needs to pull, then it pulls
-        if (joint.enabled && joint.distance > minDistance)
-            joint.distance -= jointSpeed;
-        //Gets the right click input then sends a hit raycast, puts the grapple point to the hit point, and activating the line and spring joint, making the grapple
-        if (Input.GetMouseButtonDown(1) && canGrapple)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, tileMapFilter);
-            if (hit)
             {
-                line.enabled = true;
-                joint.enabled = true;
-                line.SetPosition(1, hit.point);
-                joint.connectedAnchor = hit.point;
+                float moveDirection = Input.GetAxisRaw("Horizontal") * myRB.velocity.x;
+                if (moveDirection != Mathf.Abs(moveDirection) || Mathf.Abs(velocity.x) < speed)
+                    velocity.x += moveInputX * 2 * Time.deltaTime;
             }
-        }
-        //Detects if the player releases right click and disables the line renderer and spring joint
-        if (Input.GetMouseButtonUp(1))
-        {
-            line.enabled = false;
-            joint.enabled = false;
-        }
+            myRB.velocity = velocity;
+            if (Mathf.Abs(myRB.velocity.x) >= .2f)
+            {
+                anim.SetBool("Walking", true);
+                if (!GetComponents<AudioSource>()[0].isPlaying)
+                    GetComponents<AudioSource>()[0].Play();
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
+                GetComponents<AudioSource>()[0].Stop();
+            }
+            Debug.DrawRay(groundDetection, Vector2.down);
+            if (myRB.velocity.x > .1)
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+            else if (myRB.velocity.x < -.1)
+                transform.rotation = new Quaternion(0, 180, 0, 0);
 
-        if (powerTimer >= 0)
-            powerTimer -= Time.deltaTime;
-        else
-        {
-            canFly = false;
-            canGrapple = false;
-            speedBoost = false;
-        }
+            //mousePos on screen
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector2 distance = new Vector2(transform.position.y - mousePos.y, transform.position.x - mousePos.x);
+            //rotation towards mouse
+            angle = (Mathf.Atan2(distance.x, distance.y) * Mathf.Rad2Deg) + 180;
 
-        //hp bar
-        if (hp == maxhp)
-        {
-            healthGreen.SetActive(false);
-            healthRed.SetActive(false);
-        }
-        else
-        {
-            Vector3 redTransform = healthRed.transform.localScale;
-            healthGreen.transform.localScale = new Vector3((hp / maxhp) * redTransform.x, redTransform.y, redTransform.z);
-            healthGreen.SetActive(true);
-            healthRed.SetActive(true);
-        }
+            meleeRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        if (hurtTimer >= 0)
-            hurtTimer -= Time.deltaTime;
+            //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
+            if (Input.GetKey(KeyCode.Mouse0) && canShoot)
+            {
+                //Banana and car
+                if (playerSelect == 1 || playerSelect == 2)
+                {
+                    GameObject b = Instantiate(playerSelect == 1 ? bullet : car, transform.position, Quaternion.Euler(0, 0, angle));
+                    b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
+                    b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
+                    canShoot = false;
+                    Destroy(b, playerSelect == 1 ? bulletLifespan : bulletLifespan * 1.8f);
+                }
+                //Orbital
+                if (playerSelect == 3)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(new Vector3(mousePos.x, 12, mousePos.z), Vector2.down, 22, tileMapFilter);
+                    if (hit)
+                    {
+                        Vector2 strikePoint = new Vector2(mousePos.x, hit.point.y);
+                        GameObject b = Instantiate(orbital, new Vector2(0, 5) + strikePoint, Quaternion.identity);
+                        b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
+                        b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
+                        canShoot = false;
+                        Destroy(b, bulletLifespan);
+                    }
+                }
+                //Rolling pin
+                if (playerSelect == 4)
+                {
+                    rollingPin.SetActive(true);
+                    pinTimer = fireRate * .5f;
+                    canShoot = false;
+                }
+            }
 
-        //If the enemy falls below the death number it dies
-        if (transform.position.y <= death)
-            hp = 0;
+            //The countdown until the player can shoot again
+            else if (!canShoot)
+            {
+                fireCountdown += Time.deltaTime;
+                if (fireCountdown >= fireRate)
+                {
+                    fireCountdown = 0;
+                    canShoot = true;
+                    rollingPin.SetActive(false);
+                }
+            }
 
-        //When the player has less than or equal to 0 hp, the player gets disabled
-        if (hp <= 0)
-        {
-            transform.position = Vector2.zero;
-            hp = 3;
+            if (rollingPin.activeSelf)
+            {
+                if (pinTimer >= 0)
+                    pinTimer -= Time.deltaTime;
+                else
+                    rollingPin.SetActive(false);
+            }
+
+            //Finds the direction in which the raycast needs to go
+            direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+            //Sets the position of the line to the correct position
+            line.SetPosition(0, grapplePos.transform.position);
+            //Detects if the grapple needs to pull, then it pulls
+            if (joint.enabled && joint.distance > minDistance)
+                joint.distance -= jointSpeed;
+            //Gets the right click input then sends a hit raycast, puts the grapple point to the hit point, and activating the line and spring joint, making the grapple
+            if (Input.GetMouseButtonDown(1) && canGrapple)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, tileMapFilter);
+                if (hit)
+                {
+                    line.enabled = true;
+                    joint.enabled = true;
+                    line.SetPosition(1, hit.point);
+                    joint.connectedAnchor = hit.point;
+                }
+            }
+            //Detects if the player releases right click and disables the line renderer and spring joint
+            if (Input.GetMouseButtonUp(1))
+            {
+                line.enabled = false;
+                joint.enabled = false;
+            }
+
+            if (powerTimer >= 0)
+                powerTimer -= Time.deltaTime;
+            else
+            {
+                canFly = false;
+                canGrapple = false;
+                speedBoost = false;
+            }
+
+            //hp bar
+            if (hp == maxhp)
+            {
+                healthGreen.SetActive(false);
+                healthRed.SetActive(false);
+            }
+            else
+            {
+                Vector3 redTransform = healthRed.transform.localScale;
+                healthGreen.transform.localScale = new Vector3((hp / maxhp) * redTransform.x, redTransform.y, redTransform.z);
+                healthGreen.SetActive(true);
+                healthRed.SetActive(true);
+            }
+
+            if (hurtTimer >= 0)
+                hurtTimer -= Time.deltaTime;
+
+            //If the enemy falls below the death number it dies
+            if (transform.position.y <= death)
+                hp = 0;
+
+            //When the player has less than or equal to 0 hp, the player gets disabled
+            if (hp <= 0)
+            {
+                transform.position = Vector2.zero;
+                hp = 3;
+            }
         }
     }
 

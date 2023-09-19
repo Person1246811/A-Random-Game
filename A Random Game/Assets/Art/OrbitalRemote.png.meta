@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 531f0934c8fc8f54e927b2f39d33ac3f
+guid: fa09546855e39a44aa66a0c57061396a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 2500
+  spritePixelsToUnits: 850
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,22 +106,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hand_0
+      name: pixil-frame-0 (6)_0
       rect:
         serializedVersion: 2
-        x: 282
-        y: 989
-        width: 1981
-        height: 284
+        x: 275
+        y: 225
+        width: 375
+        height: 475
       alignment: 9
-      pivot: {x: 0, y: 0.5}
+      pivot: {x: 0.24504736, y: 0.119203135}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce0c3da1ba8ac9d4d9fd1d2179aaba5d
-      internalID: 40715369
+      spriteID: bd65e05a1eb570b4ba4a03a735fc1e6b
+      internalID: 183829946
       vertices: []
       indices: 
       edges: []
@@ -137,7 +137,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hand_0: 40715369
+      pixil-frame-0 (6)_0: 183829946
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

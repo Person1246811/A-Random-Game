@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 531f0934c8fc8f54e927b2f39d33ac3f
+guid: 9abda24313a961a4eb9c48eb211896a0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 2500
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,22 +106,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hand_0
+      name: Pixilart Sprite Sheet (8)_0
       rect:
         serializedVersion: 2
-        x: 282
-        y: 989
-        width: 1981
-        height: 284
-      alignment: 9
-      pivot: {x: 0, y: 0.5}
+        x: 11
+        y: 0
+        width: 10
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce0c3da1ba8ac9d4d9fd1d2179aaba5d
-      internalID: 40715369
+      spriteID: 9ecddc4e695b76e46bf095bf35e7c9cc
+      internalID: -526389426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pixilart Sprite Sheet (8)_1
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ec08fc3c588dd418a5582d18e322d1
+      internalID: -662064935
       vertices: []
       indices: 
       edges: []
@@ -137,7 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hand_0: 40715369
+      Pixilart Sprite Sheet (8)_0: -526389426
+      Pixilart Sprite Sheet (8)_1: -662064935
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7fd49128e770464ba0764b42ce9739e
+guid: 60ee1a6e4c0c24f4b9bc19307e97bbe0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 23
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StickIdle_0
+      name: BotWalk_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 9
         y: 0
-        width: 11
-        height: 27
+        width: 16
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,20 +120,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0fb92ea4584272459b806c7c3227c6e
-      internalID: 664330655
+      spriteID: e18a1cf77ecdb4443af90924e0c5b2cf
+      internalID: -1545230728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StickIdle_1
+      name: BotWalk_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 40
         y: 0
-        width: 11
-        height: 27
+        width: 15
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d2e9acc16faac446bf125d8ed6753a9
-      internalID: -1946724400
+      spriteID: 780661ee3272be740a48c7cfc48b3c53
+      internalID: -1685262060
       vertices: []
       indices: 
       edges: []
@@ -158,8 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      StickIdle_1: -1946724400
-      StickIdle_0: 664330655
+      BotWalk_0: -1545230728
+      BotWalk_1: -1685262060
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

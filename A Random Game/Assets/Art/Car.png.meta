@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7fd49128e770464ba0764b42ce9739e
+guid: 398b6093670d5ad44b98f60720179904
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 23
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StickIdle_0
+      name: Car_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 0
-        width: 11
-        height: 27
+        x: 125
+        y: 125
+        width: 575
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,29 +120,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0fb92ea4584272459b806c7c3227c6e
-      internalID: 664330655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StickIdle_1
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 0
-        width: 11
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5d2e9acc16faac446bf125d8ed6753a9
-      internalID: -1946724400
+      spriteID: 542d2c73455ba2b49ba59f523ee9846b
+      internalID: 1239505067
       vertices: []
       indices: 
       edges: []
@@ -158,8 +137,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      StickIdle_1: -1946724400
-      StickIdle_0: 664330655
+      Car_0: 1239505067
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

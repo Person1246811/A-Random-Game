@@ -73,7 +73,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261725167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.027, y: 0.12, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -171,10 +171,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2862416986690626123}
   - {fileID: 1261725168}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2862416986684179347
 SpriteRenderer:
@@ -291,8 +290,7 @@ MonoBehaviour:
   jumpHeight: 8
   speed: 5
   hp: 3
-  healthGreen: {fileID: 0}
-  healthRed: {fileID: 0}
+  health: {fileID: 0}
   death: -25
   score: 0
   playerSelect: 0
@@ -313,7 +311,19 @@ MonoBehaviour:
   car: {fileID: 2134911256650705209, guid: d05d4fa4c549866478bc029357ccb5cc, type: 3}
   orbital: {fileID: 7874169265044820645, guid: b596321b829cc1642b70b02c5d378048, type: 3}
   rollingPin: {fileID: 661177288}
-  meleeRotation: {fileID: 1261725167}
+  weaponRotation: {fileID: 1261725167}
+  weaponSprite: {fileID: 39995546299463979}
+  weaponSprites:
+  - {fileID: -1632067627, guid: 4f24fbfacb33d094d812c5add754d4ef, type: 3}
+  - {fileID: 757520912, guid: befdadbdfea432b4da78b39f19ee748b, type: 3}
+  - {fileID: 183829946, guid: fa09546855e39a44aa66a0c57061396a, type: 3}
+  - {fileID: 1173572968, guid: e9d39432a946d5e479d01d9d2d75962a, type: 3}
+  - {fileID: 604871165, guid: 79df48f3e2bbad14da6691d0cbd69175, type: 3}
+  handPos:
+  - {x: 0.003, y: 0.083}
+  - {x: 0.083, y: 0.1}
+  - {x: 0, y: 0}
+  - {x: 0.003, y: 0.147}
 --- !u!120 &2862416986684179351
 LineRenderer:
   serializedVersion: 2
@@ -672,12 +682,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2862416986690626122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.526, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.296, y: 0.134, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2862416986684179348}
+  m_Father: {fileID: 958747023863482595}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8163731941669615481
@@ -708,7 +718,8 @@ Transform:
   m_LocalPosition: {x: 0.734, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2862416986690626123}
   m_Father: {fileID: 1261725168}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -758,7 +769,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 16, y: 8}
+  m_Size: {x: 0.375, y: 0.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

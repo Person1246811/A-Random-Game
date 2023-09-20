@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7fd49128e770464ba0764b42ce9739e
+guid: d389f3c0e15dab643a8184a7ef4e109b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 23
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,12 +106,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StickIdle_0
+      name: BotJump_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 10
         y: 0
-        width: 11
+        width: 13
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -120,20 +120,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0fb92ea4584272459b806c7c3227c6e
-      internalID: 664330655
+      spriteID: 10f31437d7a05d14297663fb28f4da7b
+      internalID: -369976392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StickIdle_1
+      name: BotJump_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 41
         y: 0
-        width: 11
-        height: 27
+        width: 14
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d2e9acc16faac446bf125d8ed6753a9
-      internalID: -1946724400
+      spriteID: 90375067d14317e4c859d74f4a0a91df
+      internalID: 1113146320
       vertices: []
       indices: 
       edges: []
@@ -158,8 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      StickIdle_1: -1946724400
-      StickIdle_0: 664330655
+      BotJump_1: 1113146320
+      BotJump_0: -369976392
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

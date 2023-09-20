@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7fd49128e770464ba0764b42ce9739e
+guid: 3c7eb69d8092c9b41963a50dfd0f7b88
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 23
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,43 +106,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StickIdle_0
+      name: BotIdle_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 225
         y: 0
-        width: 11
-        height: 27
+        width: 350
+        height: 700
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0fb92ea4584272459b806c7c3227c6e
-      internalID: 664330655
+      spriteID: b77d852cc76cfd948888aeca2a6c1120
+      internalID: -165367551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StickIdle_1
+      name: BotIdle_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 1025
         y: 0
-        width: 11
-        height: 27
+        width: 350
+        height: 675
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d2e9acc16faac446bf125d8ed6753a9
-      internalID: -1946724400
+      spriteID: b542e268744a7b34da0b0a79a933923b
+      internalID: 1161960651
       vertices: []
       indices: 
       edges: []
@@ -158,8 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      StickIdle_1: -1946724400
-      StickIdle_0: 664330655
+      BotIdle_1: 1161960651
+      BotIdle_0: -165367551
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

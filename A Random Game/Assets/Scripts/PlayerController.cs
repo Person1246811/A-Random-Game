@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     private float maxhp = 3;
     public float hp;
-    public GameObject healthGreen;
-    public GameObject healthRed;
+    public GameObject health;
     public float death;
     private float hurtTimer;
     public int score;
@@ -54,7 +54,10 @@ public class PlayerController : MonoBehaviour
     public GameObject car;
     public GameObject orbital;
     public GameObject rollingPin;
-    public GameObject meleeRotation;
+    public GameObject weaponRotation;
+    public SpriteRenderer weaponSprite;
+    public Sprite[] weaponSprites;
+    public Vector2[] handPos;
 
     //rolling pin active timer
     private float pinTimer;
@@ -68,6 +71,8 @@ public class PlayerController : MonoBehaviour
         line = GetComponent<LineRenderer>();
         joint = GetComponent<SpringJoint2D>();
         hp = maxhp;
+        weaponRotation.transform.localPosition = handPos[playerSelect - 1];
+        weaponSprite.sprite = weaponSprites[playerSelect - 1];
     }
 
     // Update is called once per frame
@@ -75,8 +80,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
+            //Sets the collider of the player to match the size of the image
+            GetComponent<BoxCollider2D>().size = GetComponent<SpriteRenderer>().sprite.bounds.size;
+
             //Basic controls
-            Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - .6f);
+            Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - (GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2));
             Vector2 velocity = myRB.velocity;
             float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
             Debug.DrawRay(groundDetection, Vector2.down);
@@ -109,19 +117,25 @@ public class PlayerController : MonoBehaviour
                 GetComponents<AudioSource>()[0].Stop();
             }
             Debug.DrawRay(groundDetection, Vector2.down);
-            if (myRB.velocity.x > .1)
-                transform.rotation = new Quaternion(0, 0, 0, 0);
-            else if (myRB.velocity.x < -.1)
-                transform.rotation = new Quaternion(0, 180, 0, 0);
 
             //mousePos on screen
-            Vector3 mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            Vector2 distance = new Vector2(transform.position.y - mousePos.y, transform.position.x - mousePos.x);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 distance = transform.position - mousePos;
             //rotation towards mouse
-            angle = (Mathf.Atan2(distance.x, distance.y) * Mathf.Rad2Deg) + 180;
+            angle = (Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg) + 180;
 
-            meleeRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
+            weaponRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            if (mousePos.x > transform.position.x)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+                weaponSprite.flipY = false;
+            }
+            else
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);
+                weaponSprite.flipY = true;
+            }
 
             //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
             if (Input.GetKey(KeyCode.Mouse0) && canShoot)
@@ -129,7 +143,8 @@ public class PlayerController : MonoBehaviour
                 //Banana and car
                 if (playerSelect == 1 || playerSelect == 2)
                 {
-                    GameObject b = Instantiate(playerSelect == 1 ? bullet : car, transform.position, Quaternion.Euler(0, 0, angle));
+                    GameObject b = Instantiate(playerSelect == 1 ? bullet : car, weaponSprite.transform.position, Quaternion.Euler(0, 0, angle));
+                    b.GetComponent<SpriteRenderer>().flipY = weaponSprite.flipY;
                     b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
                     b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
                     canShoot = false;
@@ -196,6 +211,7 @@ public class PlayerController : MonoBehaviour
                     joint.enabled = true;
                     line.SetPosition(1, hit.point);
                     joint.connectedAnchor = hit.point;
+                    weaponSprite.sprite = weaponSprites[4];
                 }
             }
             //Detects if the player releases right click and disables the line renderer and spring joint
@@ -203,6 +219,7 @@ public class PlayerController : MonoBehaviour
             {
                 line.enabled = false;
                 joint.enabled = false;
+                weaponSprite.sprite = weaponSprites[playerSelect - 1];
             }
 
             if (powerTimer >= 0)
@@ -216,16 +233,12 @@ public class PlayerController : MonoBehaviour
 
             //hp bar
             if (hp == maxhp)
-            {
-                healthGreen.SetActive(false);
-                healthRed.SetActive(false);
-            }
+                health.SetActive(false);
             else
             {
-                Vector3 redTransform = healthRed.transform.localScale;
-                healthGreen.transform.localScale = new Vector3((hp / maxhp) * redTransform.x, redTransform.y, redTransform.z);
-                healthGreen.SetActive(true);
-                healthRed.SetActive(true);
+                health.GetComponent<Slider>().value = hp;
+                health.GetComponent<Slider>().maxValue = maxhp;
+                health.SetActive(true);
             }
 
             if (hurtTimer >= 0)

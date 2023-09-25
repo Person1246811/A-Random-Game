@@ -1396,6 +1396,8 @@ MonoBehaviour:
   gameSelect: 0
   gameText: {fileID: 0}
   playerImage: {fileID: 0}
+  hand: {fileID: 0}
+  handPos: []
   timerText: {fileID: 400350131}
   paused: 0
   pauseMenu: {fileID: 411715345}

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public int gameSelect;
     public TextMeshProUGUI gameText;
     public Image playerImage;
+    public Image hand;
+    public GameObject[] handPos;
 
     //Ui
     private float timer;
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
             gameText.text = "" + (gameSelect - 2);
             playerImage.GetComponent<Animator>().SetInteger("State", playerSelect - 1);
             playerImage.SetNativeSize();
+            hand.transform.position = handPos[playerSelect - 1].transform.position;
         }
         else
         {

@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - SpeedItem
+  - WingsItem
+  - GrappleItem
+  - EnemyBullet
+  - PlayerBullet
+  - CarBullet
+  - Orbital
   layers:
   - Default
   - TransparentFX
@@ -15,7 +23,7 @@ TagManager:
   - Terrain
   - Enemy
   - EnemyBullet
-  - 
+  - NoSpawn
   - 
   - 
   - 

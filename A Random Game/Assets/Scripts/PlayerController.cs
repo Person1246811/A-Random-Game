@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject health;
     public float death;
     private float hurtTimer;
+    private float regenTimer;
     public int score;
 
     //Player Select Variables
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private float powerTimer;
     public bool speedBoost;
     public bool canFly;
+    public GameObject wings;
     public bool canGrapple;
 
     //Variable for mouse angle
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<BoxCollider2D>().size = GetComponent<SpriteRenderer>().sprite.bounds.size;
 
             //Basic controls
-            Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - (GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2));
+            Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - (GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2) - .1f);
             Vector2 velocity = myRB.velocity;
             float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
             Debug.DrawRay(groundDetection, Vector2.down);
@@ -118,23 +120,30 @@ public class PlayerController : MonoBehaviour
             }
             Debug.DrawRay(groundDetection, Vector2.down);
 
+            //adds the wings to the player
+            if (canFly)
+                wings.SetActive(true);
+            else
+                wings.SetActive(false);
+
             //mousePos on screen
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 distance = transform.position - mousePos;
             //rotation towards mouse
             angle = (Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg) + 180;
 
+            //Rotates player and children
             weaponRotation.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             if (mousePos.x > transform.position.x)
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
-                weaponSprite.flipY = false;
+                weaponSprite.transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
             else
             {
                 transform.rotation = new Quaternion(0, 180, 0, 0);
-                weaponSprite.flipY = true;
+                weaponSprite.transform.localRotation = new Quaternion(180, 0, 0, 0);
             }
 
             //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
@@ -144,7 +153,7 @@ public class PlayerController : MonoBehaviour
                 if (playerSelect == 1 || playerSelect == 2)
                 {
                     GameObject b = Instantiate(playerSelect == 1 ? bullet : car, weaponSprite.transform.position, Quaternion.Euler(0, 0, angle));
-                    b.GetComponent<SpriteRenderer>().flipY = weaponSprite.flipY;
+                    b.GetComponent<SpriteRenderer>().flipY = weaponSprite.transform.localRotation == new Quaternion(0, 0, 0, 0) ? false : true;
                     b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
                     b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
                     canShoot = false;
@@ -239,6 +248,13 @@ public class PlayerController : MonoBehaviour
                 health.GetComponent<Slider>().value = hp;
                 health.GetComponent<Slider>().maxValue = maxhp;
                 health.SetActive(true);
+                if (regenTimer >= 0)
+                    regenTimer -= Time.deltaTime;
+                else
+                {
+                    regenTimer = 12.5f;
+                    hp++;
+                }
             }
 
             if (hurtTimer >= 0)

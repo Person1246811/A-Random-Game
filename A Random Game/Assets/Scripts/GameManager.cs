@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     public Image playerImage;
     public Image hand;
     public GameObject[] handPos;
+    public GameObject starsGroup;
+    public Image[] stars;
+    private Vector3 starsPos;
+    public float starSpeed;
 
     //Ui
     private float timer;
@@ -55,6 +59,12 @@ public class GameManager : MonoBehaviour
             playerImage.GetComponent<Animator>().SetInteger("State", playerSelect - 1);
             playerImage.SetNativeSize();
             hand.transform.position = handPos[playerSelect - 1].transform.position;
+            starsPos += Vector3.right * (starSpeed * Time.deltaTime);
+            starsGroup.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) / 1.2f + starsPos;
+            if (stars[0].transform.position.x >= stars[0].transform.localScale.x * 300)
+                stars[0].transform.position -= new Vector3(stars[0].transform.localScale.x * 400, 0);
+            if (stars[1].transform.position.x >= stars[0].transform.localScale.x * 300)
+                stars[1].transform.position -= new Vector3(stars[0].transform.localScale.x * 400, 0);
         }
         else
         {

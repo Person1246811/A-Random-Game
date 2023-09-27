@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
     public Image playerImage;
     public Image hand;
     public GameObject[] handPos;
-    public GameObject starsGroup;
-    public Image[] stars;
-    private Vector3 starsPos;
+    /*public Image[] stars;
+    public Vector3[] starsPos, starsStart;*/
     public float starSpeed;
+    public GameObject starsGroup;
+    private Vector3 canvasPos;
 
     //Ui
     private float timer;
@@ -48,6 +49,13 @@ public class GameManager : MonoBehaviour
             timer = 30 * gameSelect;
             Generate();
         }
+        /*else
+        {
+            starsStart[0] = stars[0].transform.position;
+            starsStart[1] = stars[1].transform.position;
+            starsPos[0] = stars[0].transform.position.x * Vector3.right;
+            starsPos[1] = stars[1].transform.position.x * Vector3.right;
+        }*/
     }
 
     // Update is called once per frame
@@ -59,12 +67,11 @@ public class GameManager : MonoBehaviour
             playerImage.GetComponent<Animator>().SetInteger("State", playerSelect - 1);
             playerImage.SetNativeSize();
             hand.transform.position = handPos[playerSelect - 1].transform.position;
-            starsPos += Vector3.right * (starSpeed * Time.deltaTime);
-            starsGroup.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) / 1.2f + starsPos;
-            if (stars[0].transform.position.x >= stars[0].transform.localScale.x * 300)
-                stars[0].transform.position -= new Vector3(stars[0].transform.localScale.x * 400, 0);
-            if (stars[1].transform.position.x >= stars[0].transform.localScale.x * 300)
-                stars[1].transform.position -= new Vector3(stars[0].transform.localScale.x * 400, 0);
+            //Menu sliding stuff
+            canvasPos += Vector3.right * (starSpeed * Time.deltaTime);
+            starsGroup.transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) / 1.2f + canvasPos;
+            //MenuSlide(0);
+            //MenuSlide(1);
         }
         else
         {
@@ -145,4 +152,15 @@ public class GameManager : MonoBehaviour
             itemposX = hit.point.x + gameSelect * 1.7f;
         }
     }
+
+    /*void MenuSlide(int num)
+    {
+        starsPos[num] += Vector3.right * (starSpeed * Time.deltaTime);
+        stars[num].transform.localPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) / 1.2f + starsPos[num];
+        if (stars[num].transform.position.x >= starsStart[1].x * -2.5f)
+        {
+            stars[num].transform.position = starsStart[1] * 2.5f;
+            starsPos[num] = starsStart[1].x * Vector3.right * 2.5f;
+        }
+    }*/
 }

@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 6332217579720353367}
   - component: {fileID: 6332217579720353366}
   - component: {fileID: 6332217579720353369}
+  - component: {fileID: -5400673565251987370}
   m_Layer: 8
   m_Name: Rat
   m_TagString: Enemy
@@ -246,8 +247,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2135585597343286014, guid: d4231bc1a466fe04f91b78afc0f8e63f, type: 3}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Sprite: {fileID: 54399248, guid: 8c223d8d0a858ee45986d66e0a498179, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -271,8 +272,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
+  m_AngularDrag: 0.5
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -295,7 +296,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8828125, y: 1}
+    oldSize: {x: 1.52, y: 0.72}
     newSize: {x: 0.8828125, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -303,12 +304,23 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.43359375, y: 0.25}
-      - {x: -0.43359375, y: -0.25}
-      - {x: 0, y: -0.5}
-      - {x: 0.43359375, y: -0.25}
-      - {x: 0.43359375, y: 0.25}
-      - {x: 0, y: 0.5}
+    - - {x: 0.36800003, y: -0.36}
+      - {x: 0.36800003, y: -0.28}
+      - {x: 0.36, y: -0.272}
+      - {x: 0.76000005, y: 0.112}
+      - {x: 0.76000005, y: 0.208}
+      - {x: 0.46800002, y: 0.36}
+      - {x: 0.316, y: 0.36}
+      - {x: 0.136, y: 0.34800002}
+      - {x: -0.76000005, y: 0.080000006}
+      - {x: -0.76000005, y: -0.128}
+      - {x: -0.6, y: -0.128}
+      - {x: -0.592, y: -0.120000005}
+      - {x: -0.21200001, y: -0.36}
+      - {x: -0.032, y: -0.36}
+      - {x: -0.032, y: -0.28}
+      - {x: -0.040000003, y: -0.272}
+      - {x: 0.18400002, y: -0.36}
   m_UseDelaunayMesh: 0
 --- !u!114 &6332217579720353369
 MonoBehaviour:
@@ -328,7 +340,7 @@ MonoBehaviour:
   healthGreen: {fileID: 418502115161473644}
   healthRed: {fileID: 338019170348888851}
   death: -25
-  type: 1
+  type: 2
   envlayer:
     serializedVersion: 2
     m_Bits: 128
@@ -339,7 +351,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   bullet: {fileID: 2134911256650705209, guid: ec26a3d561e12034f875239397cf311a, type: 3}
-  bulletRange: 4
-  bulletSpeed: 550
+  bulletRange: 5
+  bulletSpeed: 450
   bulletLifespan: 1
   fireRate: 1
+--- !u!95 &-5400673565251987370
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332217579720353368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b918898e14c3aca4ba75628af4b07a8c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

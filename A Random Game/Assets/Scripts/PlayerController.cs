@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     //Bullet Variables
     public float bulletSpeed;
     public float bulletLifespan;
+    private bool bulletFlip;
 
     //Bullet counters and canshoot
     private bool canShoot = true;
@@ -139,11 +140,13 @@ public class PlayerController : MonoBehaviour
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 weaponSprite.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                bulletFlip = false;
             }
             else
             {
                 transform.rotation = new Quaternion(0, 180, 0, 0);
                 weaponSprite.transform.localRotation = new Quaternion(180, 0, 0, 0);
+                bulletFlip = true;
             }
 
             //If the player clicks it spawns the bullet and makes it go towards the mouse until it runs out of bullet lifespan time
@@ -153,7 +156,7 @@ public class PlayerController : MonoBehaviour
                 if (playerSelect == 1 || playerSelect == 2)
                 {
                     GameObject b = Instantiate(playerSelect == 1 ? bullet : car, weaponSprite.transform.position, Quaternion.Euler(0, 0, angle));
-                    b.GetComponent<SpriteRenderer>().flipY = weaponSprite.transform.localRotation == new Quaternion(0, 0, 0, 0) ? false : true;
+                    b.GetComponent<SpriteRenderer>().flipY = bulletFlip;
                     b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
                     b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
                     canShoot = false;
@@ -170,7 +173,7 @@ public class PlayerController : MonoBehaviour
                         b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
                         b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
                         canShoot = false;
-                        Destroy(b, bulletLifespan);
+                        Destroy(b, bulletLifespan / 2);
                     }
                 }
                 //Rolling pin

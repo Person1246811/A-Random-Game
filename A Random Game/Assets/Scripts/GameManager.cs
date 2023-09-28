@@ -126,7 +126,8 @@ public class GameManager : MonoBehaviour
         Vector2 location = Vector2.zero;
         for (int i = 0;  i < gameSelect; i++)
         {
-            GameObject t = Instantiate(mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)], location, Quaternion.identity, grid.transform);
+            GameObject seed = mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)];
+            GameObject t = Instantiate(seed, location, Quaternion.identity, grid.transform);
             if (i != 0 && i != gameSelect - 1)
                 t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[Random.Range(1, tiles.Length)]);
             location += new Vector2(t.GetComponent<Tilemap>().size.x, 0);

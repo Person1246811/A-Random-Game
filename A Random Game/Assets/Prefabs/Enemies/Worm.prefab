@@ -271,8 +271,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
+  m_AngularDrag: 0.5
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -328,7 +328,7 @@ MonoBehaviour:
   healthGreen: {fileID: 418502115161473644}
   healthRed: {fileID: 338019170348888851}
   death: -25
-  type: 1
+  type: 3
   envlayer:
     serializedVersion: 2
     m_Bits: 128
@@ -339,7 +339,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   bullet: {fileID: 2134911256650705209, guid: ec26a3d561e12034f875239397cf311a, type: 3}
-  bulletRange: 7
-  bulletSpeed: 550
+  bulletRange: 8
+  bulletSpeed: 750
   bulletLifespan: 1
-  fireRate: 1
+  fireRate: 2

@@ -51,14 +51,24 @@ public class EnemyController : MonoBehaviour
         //Detects if the player is in range
         if (transform.position.x - player.transform.position.x <= range)
         {
+            //flips the sprite
+            if (transform.position.x - player.transform.position.x > 0)
+                GetComponent<SpriteRenderer>().flipX = true;
+            else
+                GetComponent<SpriteRenderer>().flipX = false;
+
             //Makes the enemy move towards the player
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, type == 0 ? transform.position.y : player.transform.position.y), speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, type == 0 ? player.transform.position.y : transform.position.y), speed * Time.deltaTime);
+
+            GetComponent<Animator>().SetBool("Walking", true);
 
             //if the enemy hits the ground and a wall it jumps
             if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) && type == 0 &&
                ((Physics2D.Raycast(transform.position, Vector2.left, detectRange, envlayer) || (Physics2D.Raycast(transform.position, Vector2.right, detectRange, envlayer)))))
                 velocity.y = jumpPower;
         }
+        else
+            GetComponent<Animator>().SetBool("Walking", false);
 
         //Finds the angle needed to shoot at the player
         Vector2 distance = new Vector2(transform.position.y - player.transform.position.y, transform.position.x - player.transform.position.x);

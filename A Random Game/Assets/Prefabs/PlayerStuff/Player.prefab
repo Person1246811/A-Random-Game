@@ -288,9 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundDetectDistance: 0.1
-  jumpHeight: 8
+  jumpHeight: 10
   speed: 5
-  hp: 3
+  hp: 5
   health: {fileID: 0}
   death: -25
   score: 0
@@ -308,7 +308,7 @@ MonoBehaviour:
   minDistance: 0
   bulletSpeed: 700
   bulletLifespan: 1
-  fireRate: 1
+  fireRate: 0.75
   bullet: {fileID: 2134911256650705209, guid: 891a0d1cfe14ab4469096840a0dd89c2, type: 3}
   car: {fileID: 2134911256650705209, guid: d05d4fa4c549866478bc029357ccb5cc, type: 3}
   orbital: {fileID: 7874169265044820645, guid: b596321b829cc1642b70b02c5d378048, type: 3}

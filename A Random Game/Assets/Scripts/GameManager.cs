@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
                 int biome = Random.Range(1, tiles.Length);
                 t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[biome]);
                 t.GetComponent<Tilemap>().SwapTile(topTiles[0], topTiles[biome]);
-                if (t.GetComponentsInChildren<Tilemap>()[1] != null)
+                if (t.GetComponentsInChildren<Tilemap>().Length > 1)
                     t.GetComponentsInChildren<Tilemap>()[1].SwapTile(backTiles[0], backTiles[biome]);
             }
             location += new Vector2(t.GetComponent<Tilemap>().size.x, 0);

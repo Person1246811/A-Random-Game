@@ -78,7 +78,7 @@ public class EnemyController : MonoBehaviour
         RaycastHit2D sight = Physics2D.Raycast(transform.position, player.transform.position - transform.position, bulletRange, (envlayer | playerLayer));
         if (sight.collider != null && sight.collider.tag == "Player" && canShoot)
         {
-            GameObject b = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
+            GameObject b = Instantiate(bullet, transform.position + (Vector3.up * .4f), Quaternion.Euler(0, 0, angle));
             b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * bulletSpeed);
             canShoot = false;
             Destroy(b, bulletLifespan);

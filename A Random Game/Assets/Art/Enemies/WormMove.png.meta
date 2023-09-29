@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b7e5d2ddfd2df9148853c387e9cb5ce5
+guid: 15d308f87f257a144be278d9ea68dc72
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 250
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,22 +106,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Monke_0
+      name: WormMove_0
       rect:
         serializedVersion: 2
-        x: 120
-        y: 100
-        width: 420
-        height: 340
+        x: 80
+        y: 120
+        width: 440
+        height: 160
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 458dc99ff334e954b9b4438bc10738ac
-      internalID: -371978296
+      spriteID: cfcac999fa19513419c5795aa80a1ebd
+      internalID: -267018604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WormMove_1
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 120
+        width: 440
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0983b27a52b21f4daa8633bb9019f67
+      internalID: -254459574
       vertices: []
       indices: 
       edges: []
@@ -137,7 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Monke_0: -371978296
+      WormMove_0: -267018604
+      WormMove_1: -254459574
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

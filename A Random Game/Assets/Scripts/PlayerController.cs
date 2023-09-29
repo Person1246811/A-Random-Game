@@ -76,6 +76,9 @@ public class PlayerController : MonoBehaviour
         hp = maxhp;
         weaponRotation.transform.localPosition = handPos[playerSelect - 1];
         weaponSprite.sprite = weaponSprites[playerSelect - 1];
+        
+        //Sets the collider of the player to match the size of the image
+        GetComponent<BoxCollider2D>().size = GetComponent<SpriteRenderer>().sprite.bounds.size;
     }
 
     // Update is called once per frame
@@ -83,9 +86,6 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
-            //Sets the collider of the player to match the size of the image
-            GetComponent<BoxCollider2D>().size = GetComponent<SpriteRenderer>().sprite.bounds.size;
-
             //Basic controls
             Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - (GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2) - .1f);
             Vector2 velocity = myRB.velocity;

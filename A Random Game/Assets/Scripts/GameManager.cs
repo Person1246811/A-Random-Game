@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public Grid grid;
     public GameObject[] mapGen, enemies, items;
     public LayerMask tileMapFilter;
-    public Tile[] tiles;
+    public Tile[] tiles, topTiles, backTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -123,34 +123,48 @@ public class GameManager : MonoBehaviour
     public void Generate()
     {
         Debug.Log("Generating Terrain");
-        Vector2 location = Vector2.zero;
+        Vector2 location = Vector2.down * 10;
         for (int i = 0;  i < gameSelect; i++)
         {
             GameObject seed = mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)];
             GameObject t = Instantiate(seed, location, Quaternion.identity, grid.transform);
             if (i != 0 && i != gameSelect - 1)
-                t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[Random.Range(1, tiles.Length)]);
+            {
+                int biome = Random.Range(1, tiles.Length);
+                t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[biome]);
+                t.GetComponent<Tilemap>().SwapTile(topTiles[0], topTiles[biome]);
+                if (t.GetComponentsInChildren<Tilemap>()[1] != null)
+                    t.GetComponentsInChildren<Tilemap>()[1].SwapTile(backTiles[0], backTiles[biome]);
+            }
             location += new Vector2(t.GetComponent<Tilemap>().size.x, 0);
         }
 
+        //spawning prep
+        float posX = mapGen[0].GetComponent<Tilemap>().size.x;
+        float itemposX = posX;
+        bool stop = false;
+
         Debug.Log("Spawning Enemies");
-        float posX = 10;
-        for (int i = 0; i < gameSelect * 2; i++)
+        while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + 1, posX + 15), 12), Vector2.down, 22, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect, posX + gameSelect * 4), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
-                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 3), Quaternion.identity);
+                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 2), Quaternion.identity);
+            else
+                stop = true;
             posX = hit.point.x + 2;
         }
 
+        stop = false;
         Debug.Log("Spawning Items");
-        float itemposX = 10;
-        for (int i = 0; i < gameSelect; i++)
+        while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + 1, itemposX + 15), 12), Vector2.down, 22, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 2.5f, itemposX + gameSelect * 5.5f), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
                 Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity);
-            itemposX = hit.point.x + gameSelect * 1.7f;
+            else
+                stop = true;
+            itemposX = hit.point.x + 3;
         }
     }
 

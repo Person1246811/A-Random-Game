@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 6332217579720353367}
   - component: {fileID: 6332217579720353366}
   - component: {fileID: 6332217579720353369}
+  - component: {fileID: -6030284715559112073}
   m_Layer: 8
   m_Name: Worm
   m_TagString: Enemy
@@ -246,8 +247,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2135585597343286014, guid: d4231bc1a466fe04f91b78afc0f8e63f, type: 3}
-  m_Color: {r: 0.9528302, g: 0.5528213, b: 0.5528213, a: 1}
+  m_Sprite: {fileID: -1073318800, guid: fc9b88d968ac14e4890cdc84b6da5731, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -295,7 +296,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8828125, y: 1}
+    oldSize: {x: 1.76, y: 0.64}
     newSize: {x: 0.8828125, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -303,12 +304,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.43359375, y: 0.25}
-      - {x: -0.43359375, y: -0.25}
-      - {x: 0, y: -0.5}
-      - {x: 0.43359375, y: -0.25}
-      - {x: 0.43359375, y: 0.25}
-      - {x: 0, y: 0.5}
+    - - {x: -0.81600004, y: 0.008}
+      - {x: -0.88000005, y: -0.056}
+      - {x: -0.88000005, y: -0.24800001}
+      - {x: -0.808, y: -0.32000002}
+      - {x: 0.808, y: -0.32000002}
+      - {x: 0.88000005, y: -0.24800001}
+      - {x: 0.88000005, y: -0.072000004}
+      - {x: 0.8, y: 0.008}
   m_UseDelaunayMesh: 0
 --- !u!114 &6332217579720353369
 MonoBehaviour:
@@ -343,3 +346,23 @@ MonoBehaviour:
   bulletSpeed: 750
   bulletLifespan: 1
   fireRate: 2
+--- !u!95 &-6030284715559112073
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332217579720353368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f0cf7c75a927ed6489e216fc642de07f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

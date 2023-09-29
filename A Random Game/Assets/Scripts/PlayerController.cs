@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //End menu
+    public GameObject endMenu;
+
     //Basic variables
     private Animator anim;
     private Rigidbody2D myRB;
@@ -270,7 +273,7 @@ public class PlayerController : MonoBehaviour
             //When the player has less than or equal to 0 hp, the player gets disabled
             if (hp <= 0)
             {
-                transform.position = Vector2.zero;
+                transform.position = Vector2.right * 19;
                 hp = 3;
             }
         }
@@ -297,6 +300,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "EndPortal")
+        {
+            Time.timeScale = 0;
+            endMenu.SetActive(true);
+        }
+
         if (!canFly && !canGrapple && !speedBoost)
         { 
             if (collision.gameObject.tag == "WingsItem")

@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
             timerText.text = min + ":" + (sec < 10 ? "0" + sec : sec);
             if (Input.GetKeyDown(KeyCode.Escape))
             { 
-                if (paused)
+                if (paused && Time.timeScale == 0)
                 {
                     paused = false;
                     pauseMenu.SetActive(false);

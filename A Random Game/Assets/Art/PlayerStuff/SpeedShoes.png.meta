@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 02bbaef5f1991694c9055bbeabf48994
+guid: 086a0fcd462a7ab4493740380f508af2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 450
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnemyBullet_0
+      name: SpeedShoes_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 140
-        width: 640
-        height: 340
+        x: 5
+        y: 8
+        width: 19
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,8 +120,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33d86e44894ca1d4fb955660b54a13a4
-      internalID: -1770384361
+      spriteID: 9347ee7becd4b11429a3e6ef72a49913
+      internalID: 890321726
       vertices: []
       indices: 
       edges: []
@@ -137,7 +137,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EnemyBullet_0: -1770384361
+      SpeedShoes_0: 890321726
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

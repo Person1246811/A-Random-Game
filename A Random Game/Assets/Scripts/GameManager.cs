@@ -25,14 +25,17 @@ public class GameManager : MonoBehaviour
     private Vector3 canvasPos;
 
     //Ui
-    private float timer;
+    public float timer;
     public TextMeshProUGUI timerText;
+
+    public GameObject loseMenu;
 
     //Pause
     public bool paused;
     public GameObject pauseMenu;
 
     //Map
+    public GameObject enemiesGroup, itemsGroup;
     public Grid grid;
     public GameObject[] mapGen, enemies, items;
     public LayerMask tileMapFilter;
@@ -79,20 +82,26 @@ public class GameManager : MonoBehaviour
             int min = Mathf.RoundToInt(timer) / 60;
             int sec = Mathf.RoundToInt(timer) % 60;
             timerText.text = min + ":" + (sec < 10 ? "0" + sec : sec);
-            if (Input.GetKeyDown(KeyCode.Escape))
-            { 
-                if (paused && Time.timeScale == 0)
-                {
-                    paused = false;
-                    pauseMenu.SetActive(false);
-                    Time.timeScale = 1;
-                }
-                else
+            if (Input.GetKeyDown(KeyCode.Escape) && !player.GetComponent<PlayerController>().endMenu.activeSelf)
+            {
+                if (!paused && Time.timeScale == 1)
                 {
                     paused = true;
                     pauseMenu.SetActive(true);
                     Time.timeScale = 0;
                 }
+                else
+                {
+                    paused = false;
+                    pauseMenu.SetActive(false);
+                    Time.timeScale = 1;
+                }
+            }
+
+            if (timer < 0)
+            {
+                loseMenu.SetActive(true);
+                Time.timeScale = 0;
             }
         }
     }
@@ -124,19 +133,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Generating Terrain");
         Vector2 location = Vector2.down * 10;
-        for (int i = 0;  i < gameSelect; i++)
+        for (int i = 0; i < gameSelect; i++)
         {
             GameObject seed = mapGen[i == 0 || i == gameSelect - 1 ? (i == 0 ? 0 : 1) : Random.Range(2, mapGen.Length)];
             GameObject t = Instantiate(seed, location, Quaternion.identity, grid.transform);
+            Tilemap map = t.GetComponent<Tilemap>();
+            int biome = 0;
             if (i != 0 && i != gameSelect - 1)
-            {
-                int biome = Random.Range(1, tiles.Length);
-                t.GetComponent<Tilemap>().SwapTile(tiles[0], tiles[biome]);
-                t.GetComponent<Tilemap>().SwapTile(topTiles[0], topTiles[biome]);
-                if (t.GetComponentsInChildren<Tilemap>().Length > 1)
-                    t.GetComponentsInChildren<Tilemap>()[1].SwapTile(backTiles[0], backTiles[biome]);
-            }
-            location += new Vector2(t.GetComponent<Tilemap>().size.x, 0);
+                biome = Random.Range(1, tiles.Length);
+            map.SwapTile(tiles[0], tiles[biome]);
+            map.SwapTile(topTiles[0], topTiles[biome]);
+            if (t.GetComponentsInChildren<Tilemap>().Length > 1)
+                t.GetComponentsInChildren<Tilemap>()[1].SwapTile(backTiles[0], backTiles[biome]);
+            t.GetComponent<Terrain>().biome = biome;
+            location += new Vector2(map.size.x - 2, 0);
         }
 
         //spawning prep
@@ -149,7 +159,7 @@ public class GameManager : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect, posX + gameSelect * 4), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
-                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 2), Quaternion.identity);
+                Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 2), Quaternion.identity, enemiesGroup.transform);
             else
                 stop = true;
             posX = hit.point.x + 2;
@@ -161,7 +171,7 @@ public class GameManager : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 2.5f, itemposX + gameSelect * 5.5f), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
-                Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity);
+                Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity, itemsGroup.transform);
             else
                 stop = true;
             itemposX = hit.point.x + 3;

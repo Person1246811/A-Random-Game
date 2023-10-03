@@ -346,7 +346,7 @@ MonoBehaviour:
     m_Bits: 128
   detectRange: 1
   detectRangeDown: 1
-  jumpPower: 4
+  jumpPower: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 8

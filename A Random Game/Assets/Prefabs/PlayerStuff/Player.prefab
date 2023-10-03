@@ -287,14 +287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfec739946ef1c24b9a015673c6fb7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endMenu: {fileID: 0}
   groundDetectDistance: 0.1
-  jumpHeight: 10
+  jumpHeight: 9
   speed: 5
   hp: 5
   health: {fileID: 0}
   death: -25
   score: 0
   playerSelect: 0
+  speedColor: {r: 0.5707547, g: 0.9462127, b: 1, a: 1}
   speedBoost: 0
   canFly: 0
   wings: {fileID: 7462860110448341263}

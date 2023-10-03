@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueBox
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7482667652216324306, guid: 77d166073ea836541a0b584cc1645222, type: 3}
-  m_Color: {r: 0, g: 0.266294, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.91949296, b: 1, a: 0.11372549}
   m_Transform:
     e00: 1
     e01: 0

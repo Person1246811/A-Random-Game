@@ -63,7 +63,7 @@ public class EnemyController : MonoBehaviour
             GetComponent<Animator>().SetBool("Walking", true);
 
             //if the enemy hits the ground and a wall it jumps
-            if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) && type == 0 &&
+            if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) && type != 0 &&
                ((Physics2D.Raycast(transform.position, Vector2.left, detectRange, envlayer) || (Physics2D.Raycast(transform.position, Vector2.right, detectRange, envlayer)))))
                 velocity.y = jumpPower;
         }

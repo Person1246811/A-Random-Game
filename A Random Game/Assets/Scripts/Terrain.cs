@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Terrain : MonoBehaviour
 {
+    public int biome;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //When a car bullet hits the terrain it freezes, changes sprite, then expands

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject health;
     public float death;
     private float hurtTimer;
-    private float regenTimer;
+    private float regenTimer = 12.5f;
     public int score;
 
     //Player Select Variables
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     //Power ups
     private float powerTimer;
+    public Color speedColor;
     public bool speedBoost;
     public bool canFly;
     public GameObject wings;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
             Vector2 velocity = myRB.velocity;
             float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
             Debug.DrawRay(groundDetection, Vector2.down);
-            if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || canFly)
+            if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || (canFly && transform.position.y <= 17))
             {
                 velocity.x = moveInputX;
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -129,6 +130,11 @@ public class PlayerController : MonoBehaviour
                 wings.SetActive(true);
             else
                 wings.SetActive(false);
+
+            if (speedBoost)
+                GetComponent<SpriteRenderer>().color = speedColor;
+            else
+                GetComponent<SpriteRenderer>().color = Color.white;
 
             //mousePos on screen
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

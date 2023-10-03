@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public Grid grid;
     public GameObject[] mapGen, enemies, items;
     public LayerMask tileMapFilter;
-    public Tile[] tiles, topTiles, backTiles;
+    public Tile[] tiles, topTiles, backTiles, decorTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void GameSelect(int amount)
     {
-        if (gameSelect + amount >= 5)
+        if (gameSelect + amount >= 5 && gameSelect + amount <= 75)
             gameSelect += amount;
     }
 
@@ -144,7 +144,10 @@ public class GameManager : MonoBehaviour
             map.SwapTile(tiles[0], tiles[biome]);
             map.SwapTile(topTiles[0], topTiles[biome]);
             if (t.GetComponentsInChildren<Tilemap>().Length > 1)
+            {
                 t.GetComponentsInChildren<Tilemap>()[1].SwapTile(backTiles[0], backTiles[biome]);
+                t.GetComponentsInChildren<Tilemap>()[1].SwapTile(decorTiles[0], decorTiles[biome]);
+            }
             t.GetComponent<Terrain>().biome = biome;
             location += new Vector2(map.size.x - 2, 0);
         }

@@ -2337,10 +2337,11 @@ MonoBehaviour:
   mapGen:
   - {fileID: 4787363231028704072, guid: 14897e8e8751b264b8fc957dfc536927, type: 3}
   - {fileID: 4787363231028704072, guid: 2fa1587518f9dbb4c87839a67721be38, type: 3}
+  - {fileID: 4787363231028704072, guid: 5eb50d265eb80864a8af2ecc8438bf4d, type: 3}
   - {fileID: 4787363231028704072, guid: 2dbb63cc6974e16489c8cf77d01f6635, type: 3}
   - {fileID: 4787363231028704072, guid: b33a4a79d4ccc8a4882eb76b30810f33, type: 3}
-  - {fileID: 4787363231028704072, guid: 1c7284e55cbc3264481d15badf578f01, type: 3}
   - {fileID: 4787363231028704072, guid: 78b9eb2a53c107e4eb44b7ac884cdaae, type: 3}
+  - {fileID: 4787363231028704072, guid: 1c7284e55cbc3264481d15badf578f01, type: 3}
   - {fileID: 4787363231028704072, guid: 65c51a5e4b92fd74e8fb2ed19413f5c5, type: 3}
   enemies:
   - {fileID: 6332217579720353368, guid: 80fd8615a08812143b18d1a7fb6abd9b, type: 3}
@@ -2357,7 +2358,7 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: edeb8d5915155a24a8e5238b37e7d239, type: 2}
   - {fileID: 11400000, guid: a232ec3b61c700f47b9df6723e93d4a3, type: 2}
-  - {fileID: 11400000, guid: 3cde8450b4491c846a96786eb5e4e197, type: 2}
+  - {fileID: 11400000, guid: 5aef58c397b6448468e3b69271290e5b, type: 2}
   - {fileID: 11400000, guid: 1661899a99a08b2459f7f698b88b1af9, type: 2}
   topTiles:
   - {fileID: 11400000, guid: c35317aef3c58af49af6ec39ae682d61, type: 2}
@@ -2369,6 +2370,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 113b39d53e7fa2d4eb14a1becab8bd93, type: 2}
   - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
   - {fileID: 11400000, guid: 7a4ce88fb0c83cc49a34ce88d8d9e431, type: 2}
+  decorTiles:
+  - {fileID: 11400000, guid: 877f4d92dcaeffa4d8d7af685df62502, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
 --- !u!4 &1559296691
 Transform:
   m_ObjectHideFlags: 0

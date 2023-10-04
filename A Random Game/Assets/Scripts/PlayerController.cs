@@ -5,10 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //biome
+    public int currentBiome;
+
     //End menu
     public GameObject endMenu;
 
     //Basic variables
+    private GameObject gameManager;
     private Animator anim;
     private Rigidbody2D myRB;
     public float groundDetectDistance = .1f;
@@ -71,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager");
         anim = GetComponent<Animator>();
         myRB = GetComponent<Rigidbody2D>();
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
@@ -293,6 +298,9 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             hp--;
         }
+
+        if (collision.gameObject.tag == "Terrain")
+            currentBiome = collision.gameObject.GetComponent<Terrain>().biome;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -308,8 +316,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "EndPortal")
         {
-            Time.timeScale = 0;
+            gameManager.GetComponent<AudioSource>().clip = gameManager.GetComponent<GameManager>().songs[0];
+            gameManager.GetComponent<AudioSource>().Play();
+            gameManager.GetComponent<AudioSource>().loop = true;
+            GetComponents<AudioSource>()[0].Stop();
             endMenu.SetActive(true);
+            Time.timeScale = 0;
         }
 
         if (!canFly && !canGrapple && !speedBoost)

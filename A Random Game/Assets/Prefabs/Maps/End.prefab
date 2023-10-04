@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4787363231028704079}
   m_Layer: 10
   m_Name: End
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5860,3 +5860,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ea22664b749ec4f8a937866bfac3f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  biome: 0

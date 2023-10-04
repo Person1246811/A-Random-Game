@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     //player
     private GameObject player;
 
+    //Music
+    private AudioSource audioSource;
+    public AudioClip[] songs;
+
     //Menu
     public int playerSelect;
     public int gameSelect;
@@ -46,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
         gameSelect = PlayerPrefs.GetInt("gameSelect", 5);
+        audioSource = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -78,6 +83,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = songs[Random.Range(1, songs.Length)];
+                audioSource.Play();
+            }
             timer -= Time.deltaTime;
             int min = Mathf.RoundToInt(timer) / 60;
             int sec = Mathf.RoundToInt(timer) % 60;

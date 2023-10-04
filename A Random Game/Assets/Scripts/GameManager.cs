@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            timer = 30 * gameSelect;
+            timer = 90 * gameSelect;
             Generate();
         }
         /*else

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject health;
     public float death;
     private float hurtTimer;
-    private float regenTimer = 12.5f;
+    private float regenTimer = 6f;
     public int score;
 
     //Player Select Variables
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
                     regenTimer -= Time.deltaTime;
                 else
                 {
-                    regenTimer = 12.5f;
+                    regenTimer = 6f;
                     hp++;
                 }
             }

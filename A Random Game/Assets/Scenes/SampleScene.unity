@@ -2341,6 +2341,7 @@ MonoBehaviour:
   - {fileID: 4787363231028704072, guid: 2dbb63cc6974e16489c8cf77d01f6635, type: 3}
   - {fileID: 4787363231028704072, guid: b33a4a79d4ccc8a4882eb76b30810f33, type: 3}
   - {fileID: 4787363231028704072, guid: 78b9eb2a53c107e4eb44b7ac884cdaae, type: 3}
+  - {fileID: 4787363231028704072, guid: 70e0cad8233159b4aaadb64b4f7cf7aa, type: 3}
   - {fileID: 4787363231028704072, guid: 1c7284e55cbc3264481d15badf578f01, type: 3}
   - {fileID: 4787363231028704072, guid: 65c51a5e4b92fd74e8fb2ed19413f5c5, type: 3}
   enemies:
@@ -2360,20 +2361,36 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a232ec3b61c700f47b9df6723e93d4a3, type: 2}
   - {fileID: 11400000, guid: 5aef58c397b6448468e3b69271290e5b, type: 2}
   - {fileID: 11400000, guid: 1661899a99a08b2459f7f698b88b1af9, type: 2}
+  - {fileID: 11400000, guid: e9fc8373c5b0c074f9dca8b89ef5067e, type: 2}
+  - {fileID: 11400000, guid: 68b68c558080d2f4a9286697c90a28af, type: 2}
+  - {fileID: 11400000, guid: 9f6a443c3f2dc384d81fcb6badf4c842, type: 2}
+  - {fileID: 11400000, guid: 5dbdc020a2284c040bf7d01f073acebd, type: 2}
   topTiles:
   - {fileID: 11400000, guid: c35317aef3c58af49af6ec39ae682d61, type: 2}
   - {fileID: 11400000, guid: f60ce19a634af83489dee3d90a6efa0c, type: 2}
   - {fileID: 11400000, guid: a1affaa047b6e2c42985b53a960149d6, type: 2}
   - {fileID: 11400000, guid: 1d78f8baca4815243bccbc0b114eb395, type: 2}
+  - {fileID: 11400000, guid: 956b3c073e62ed64db6154468bd665ed, type: 2}
+  - {fileID: 11400000, guid: 62585cff3e22ad14bb90d51cfab848e8, type: 2}
+  - {fileID: 11400000, guid: 7dea3e38252ea3042a03e17acbfe4aef, type: 2}
+  - {fileID: 11400000, guid: 3716fe8269d4db24ca3f4be05d4aacad, type: 2}
   backTiles:
   - {fileID: 11400000, guid: 3cde8450b4491c846a96786eb5e4e197, type: 2}
   - {fileID: 11400000, guid: 113b39d53e7fa2d4eb14a1becab8bd93, type: 2}
   - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
   - {fileID: 11400000, guid: 7a4ce88fb0c83cc49a34ce88d8d9e431, type: 2}
+  - {fileID: 11400000, guid: 8df9fb502fd9f2a4da852aee53a9d782, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
   decorTiles:
-  - {fileID: 11400000, guid: 877f4d92dcaeffa4d8d7af685df62502, type: 2}
+  - {fileID: 11400000, guid: 9824671a7e2a1a645b64a08762f8bea3, type: 2}
   - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
   - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
+  - {fileID: 11400000, guid: a59ab32cf32509147b5ded77a33dade9, type: 2}
+  - {fileID: 11400000, guid: 0f547f3a45b475948b61d6d2fd2afb3b, type: 2}
+  - {fileID: 11400000, guid: f4c4461984825674fb2980d5df19a135, type: 2}
   - {fileID: 11400000, guid: 61af607996dea944dbe55a92c3bca994, type: 2}
 --- !u!4 &1559296691
 Transform:
@@ -2404,7 +2421,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.45
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

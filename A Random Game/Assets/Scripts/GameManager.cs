@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public AudioClip[] songs;
 
     //Menu
+    public GameObject menuScreen, tutorialScreen;
     public int playerSelect;
     public int gameSelect;
     public TextMeshProUGUI gameText;
@@ -146,6 +147,13 @@ public class GameManager : MonoBehaviour
     {
         if (gameSelect + amount >= 5 && gameSelect + amount <= 75)
             gameSelect += amount;
+        GetComponents<AudioSource>()[1].Play();
+    }
+
+    public void ChangeScreen(int amount)
+    {
+        menuScreen.SetActive(amount == 0 ? true : false);
+        tutorialScreen.SetActive(amount == 0 ? false : true);
         GetComponents<AudioSource>()[1].Play();
     }
 

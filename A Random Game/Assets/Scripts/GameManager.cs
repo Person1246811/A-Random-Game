@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawning Enemies");
         while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect * .5f, posX + gameSelect * 3), 15), Vector2.down, 35, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect * .5f, posX + gameSelect * 3), 25), Vector2.down, 40, tileMapFilter);
             if (hit)
                 Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 2), Quaternion.identity, enemiesGroup.transform);
             else
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawning Items");
         while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 1.5f, itemposX + gameSelect * 3.8f), 15), Vector2.down, 35, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 1.5f, itemposX + gameSelect * 3.8f), 25), Vector2.down, 40, tileMapFilter);
             if (hit)
                 Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity, itemsGroup.transform);
             else

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     //biome
     public int currentBiome;
+    public Color[] biomeColor;
 
     //End menu
     public GameObject endMenu;
@@ -95,6 +96,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
+            //Changes background color
+            mainCamera.backgroundColor = biomeColor[currentBiome];
+
             //Basic controls
             Vector2 groundDetection = new Vector2(transform.position.x, transform.position.y - (GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2) - .1f);
             Vector2 velocity = myRB.velocity;

@@ -297,6 +297,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBiome: 0
+  biomeColor:
+  - {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 0}
+  - {r: 0, g: 0.5058824, b: 1, a: 0}
+  - {r: 0.1273585, g: 0.8879176, b: 1, a: 0}
+  - {r: 0.25787646, g: 0.37823686, b: 0.5754717, a: 0}
+  - {r: 0.22988339, g: 0, b: 0.6509434, a: 0}
+  - {r: 0.373576, g: 0.52662617, b: 0.6886792, a: 0}
+  - {r: 0, g: 0.69109607, b: 1, a: 0}
+  - {r: 0.09939474, g: 0.2924528, b: 0.07863118, a: 0}
   endMenu: {fileID: 0}
   groundDetectDistance: 0.1
   jumpHeight: 9

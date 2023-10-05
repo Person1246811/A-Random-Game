@@ -100,7 +100,8 @@ public class PlayerController : MonoBehaviour
             Vector2 velocity = myRB.velocity;
             float moveInputX = (speedBoost ? speed * 1.5f : speed) * Input.GetAxisRaw("Horizontal");
             Debug.DrawRay(groundDetection, Vector2.down);
-            if (Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance) || (canFly && transform.position.y <= 17))
+            RaycastHit2D grounded = Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance);
+            if (grounded || (canFly && transform.position.y <= 17))
             {
                 velocity.x = moveInputX;
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(myRB.velocity.x) >= .2f)
             {
                 anim.SetBool("Walking", true);
-                if (!GetComponents<AudioSource>()[0].isPlaying)
+                if (!GetComponents<AudioSource>()[0].isPlaying && grounded)
                     GetComponents<AudioSource>()[0].Play();
             }
             else
@@ -128,7 +129,8 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Walking", false);
                 GetComponents<AudioSource>()[0].Stop();
             }
-            Debug.DrawRay(groundDetection, Vector2.down);
+            if (!grounded)
+                GetComponents<AudioSource>()[0].Stop();
 
             //adds the wings to the player
             if (canFly)
@@ -173,6 +175,7 @@ public class PlayerController : MonoBehaviour
                     b.GetComponent<SpriteRenderer>().flipY = bulletFlip;
                     b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * (playerSelect == 1 ? bulletSpeed : bulletSpeed * .8f));
                     b.GetComponent<Rigidbody2D>().gravityScale = playerSelect == 1 ? .5f : 1.2f;
+                    GetComponents<AudioSource>()[playerSelect == 1 ? 2 : 3].Play();
                     canShoot = false;
                     Destroy(b, playerSelect == 1 ? bulletLifespan : bulletLifespan * 1.8f);
                 }
@@ -186,6 +189,7 @@ public class PlayerController : MonoBehaviour
                         GameObject b = Instantiate(orbital, new Vector2(0, 5) + strikePoint, Quaternion.identity);
                         b.GetComponent<LineRenderer>().SetPosition(0, new Vector2(0, 10) + strikePoint);
                         b.GetComponent<LineRenderer>().SetPosition(1, strikePoint);
+                        GetComponents<AudioSource>()[4].Play();
                         canShoot = false;
                         Destroy(b, bulletLifespan / 2);
                     }
@@ -194,6 +198,7 @@ public class PlayerController : MonoBehaviour
                 if (playerSelect == 4)
                 {
                     rollingPin.SetActive(true);
+                    GetComponents<AudioSource>()[5].Play();
                     pinTimer = fireRate * .5f;
                     canShoot = false;
                 }
@@ -238,6 +243,8 @@ public class PlayerController : MonoBehaviour
                     line.SetPosition(1, hit.point);
                     joint.connectedAnchor = hit.point;
                     weaponSprite.sprite = weaponSprites[4];
+                    GetComponents<AudioSource>()[6].Play();
+                    GetComponents<AudioSource>()[7].Play();
                 }
             }
             //Detects if the player releases right click and disables the line renderer and spring joint
@@ -246,6 +253,7 @@ public class PlayerController : MonoBehaviour
                 line.enabled = false;
                 joint.enabled = false;
                 weaponSprite.sprite = weaponSprites[playerSelect - 1];
+                GetComponents<AudioSource>()[7].Stop();
             }
 
             if (powerTimer >= 0)
@@ -284,6 +292,7 @@ public class PlayerController : MonoBehaviour
             //When the player has less than or equal to 0 hp, the player gets disabled
             if (hp <= 0)
             {
+                GetComponents<AudioSource>()[9].Play();
                 transform.position = Vector2.right * 19;
                 hp = 3;
             }
@@ -296,6 +305,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "EnemyBullet")
         {
             Destroy(collision.gameObject);
+            GetComponents<AudioSource>()[8].Play();
             hp--;
         }
 
@@ -307,6 +317,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy" && hurtTimer <= 0)
         {
+            GetComponents<AudioSource>()[8].Play();
             hp--;
             hurtTimer = .5f;
         }
@@ -316,9 +327,9 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "EndPortal")
         {
-            gameManager.GetComponent<AudioSource>().clip = gameManager.GetComponent<GameManager>().songs[0];
-            gameManager.GetComponent<AudioSource>().Play();
-            gameManager.GetComponent<AudioSource>().loop = true;
+            gameManager.GetComponents<AudioSource>()[0].clip = gameManager.GetComponent<GameManager>().songs[0];
+            gameManager.GetComponents<AudioSource>()[0].Play();
+            gameManager.GetComponents<AudioSource>()[0].loop = true;
             GetComponents<AudioSource>()[0].Stop();
             endMenu.SetActive(true);
             Time.timeScale = 0;
@@ -329,18 +340,21 @@ public class PlayerController : MonoBehaviour
             if (collision.gameObject.tag == "WingsItem")
             {
                 Destroy(collision.gameObject);
+                GetComponents<AudioSource>()[10].Play();
                 canFly = true;
                 powerTimer = 8;
             }
             if (collision.gameObject.tag == "GrappleItem")
             {
                 Destroy(collision.gameObject);
+                GetComponents<AudioSource>()[10].Play();
                 canGrapple = true;
                 powerTimer = 8;
             }
             if (collision.gameObject.tag == "SpeedItem")
             {
                 Destroy(collision.gameObject);
+                GetComponents<AudioSource>()[10].Play();
                 speedBoost = true;
                 powerTimer = 8;
             } 

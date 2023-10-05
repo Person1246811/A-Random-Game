@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     private GameObject player;
 
     //Music
-    private AudioSource audioSource;
     public AudioClip[] songs;
 
     //Menu
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour
     {
         playerSelect = PlayerPrefs.GetInt("playerSelect", 1);
         gameSelect = PlayerPrefs.GetInt("gameSelect", 5);
-        audioSource = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -83,10 +81,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (!audioSource.isPlaying)
+            if (!GetComponents<AudioSource>()[0].isPlaying && Time.timeScale == 1)
             {
-                audioSource.clip = songs[Random.Range(1, songs.Length)];
-                audioSource.Play();
+                GetComponents<AudioSource>()[0].clip = songs[Random.Range(1, songs.Length)];
+                GetComponents<AudioSource>()[0].Play();
             }
             timer -= Time.deltaTime;
             int min = Mathf.RoundToInt(timer) / 60;
@@ -98,12 +96,16 @@ public class GameManager : MonoBehaviour
                 {
                     paused = true;
                     pauseMenu.SetActive(true);
+                    GetComponents<AudioSource>()[1].Play();
+                    GetComponents<AudioSource>()[0].Pause();
+                    GetComponents<AudioSource>()[2].Stop();
                     Time.timeScale = 0;
                 }
                 else
                 {
                     paused = false;
                     pauseMenu.SetActive(false);
+                    GetComponents<AudioSource>()[1].Play();
                     Time.timeScale = 1;
                 }
             }
@@ -111,8 +113,13 @@ public class GameManager : MonoBehaviour
             if (timer < 0)
             {
                 loseMenu.SetActive(true);
+                GetComponents<AudioSource>()[0].Stop();
+                GetComponents<AudioSource>()[2].Stop();
                 Time.timeScale = 0;
             }
+
+            if (timer <= 12 && !GetComponents<AudioSource>()[2].isPlaying && Time.timeScale == 1)
+                GetComponents<AudioSource>()[2].Play();
         }
     }
 
@@ -122,6 +129,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("playerSelect", playerSelect);
             PlayerPrefs.SetInt("gameSelect", gameSelect);
+            GetComponents<AudioSource>()[2].Play();
         }
         Time.timeScale = 1;
         SceneManager.LoadScene(num);
@@ -131,12 +139,14 @@ public class GameManager : MonoBehaviour
     {
         if (playerSelect + amount >= 1 && playerSelect + amount <= 4)
             playerSelect += amount;
+        GetComponents<AudioSource>()[1].Play();
     }
 
     public void GameSelect(int amount)
     {
         if (gameSelect + amount >= 5 && gameSelect + amount <= 75)
             gameSelect += amount;
+        GetComponents<AudioSource>()[1].Play();
     }
 
     public void Generate()
@@ -170,7 +180,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawning Enemies");
         while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect, posX + gameSelect * 4), 15), Vector2.down, 35, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(posX + gameSelect * .5f, posX + gameSelect * 3), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
                 Instantiate(enemies[Random.Range(0, enemies.Length)], hit.point + (Vector2.up * 2), Quaternion.identity, enemiesGroup.transform);
             else
@@ -182,7 +192,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawning Items");
         while (!stop)
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 2.5f, itemposX + gameSelect * 5.5f), 15), Vector2.down, 35, tileMapFilter);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Random.Range(itemposX + gameSelect * 1.5f, itemposX + gameSelect * 3.8f), 15), Vector2.down, 35, tileMapFilter);
             if (hit)
                 Instantiate(items[Random.Range(0, items.Length)], hit.point + Vector2.up, Quaternion.identity, itemsGroup.transform);
             else

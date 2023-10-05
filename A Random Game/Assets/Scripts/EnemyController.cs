@@ -61,14 +61,22 @@ public class EnemyController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, type == 0 ? player.transform.position.y : transform.position.y), speed * Time.deltaTime);
 
             GetComponent<Animator>().SetBool("Walking", true);
+            if (!GetComponents<AudioSource>()[0].isPlaying)
+                GetComponents<AudioSource>()[0].Play();
 
             //if the enemy hits the ground and a wall it jumps
             if (Physics2D.Raycast(transform.position, Vector2.down, detectRangeDown, envlayer) && type != 0 &&
                ((Physics2D.Raycast(transform.position, Vector2.left, detectRange, envlayer) || (Physics2D.Raycast(transform.position, Vector2.right, detectRange, envlayer)))))
+            {
                 velocity.y = jumpPower;
+                GetComponents<AudioSource>()[4].Play();
+            }
         }
         else
+        {
             GetComponent<Animator>().SetBool("Walking", false);
+            GetComponents<AudioSource>()[0].Stop();
+        }
 
         //Finds the angle needed to shoot at the player
         Vector2 distance = new Vector2(transform.position.y - player.transform.position.y, transform.position.x - player.transform.position.x);
@@ -80,6 +88,7 @@ public class EnemyController : MonoBehaviour
         {
             GameObject b = Instantiate(bullet, transform.position + (Vector3.up * .4f), Quaternion.Euler(0, 0, angle));
             b.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.right * bulletSpeed);
+            GetComponents<AudioSource>()[1].Play();
             canShoot = false;
             Destroy(b, bulletLifespan);
         }
@@ -126,6 +135,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerBullet")
         {
             Destroy(collision.gameObject);
+            GetComponents<AudioSource>()[2].Play();
             hp--;
         }
     }
@@ -134,17 +144,25 @@ public class EnemyController : MonoBehaviour
     {
         //takes damage when the enemy touches the rolling pin
         if (collision.gameObject.tag == "PlayerBullet")
+        {
+            GetComponents<AudioSource>()[2].Play();
             hp--;
+        }
         //When a car bullet hits the enemy it freezes, changes sprite, then expands, and also hurts the enemy
         if (collision.gameObject.tag == "CarBullet")
         {
             collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
             collision.gameObject.GetComponentsInChildren<SpriteRenderer>()[1].enabled = true;
             collision.gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
+            GetComponents<AudioSource>()[2].Play();
+            GetComponents<AudioSource>()[3].Play();
             hp--;
         }
         //kills the enemy when it touches the orbital laser
         if (collision.gameObject.tag == "Orbital")
+        {
+            GetComponents<AudioSource>()[2].Play();
             hp = 0;
+        }
     }
 }

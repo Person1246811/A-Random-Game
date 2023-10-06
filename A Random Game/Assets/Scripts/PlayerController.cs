@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
                 //Orbital
                 if (playerSelect == 3)
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(new Vector3(mousePos.x, 12, mousePos.z), Vector2.down, 22, tileMapFilter);
+                    RaycastHit2D hit = Physics2D.Raycast(new Vector3(mousePos.x, 25, mousePos.z), Vector2.down, 40, tileMapFilter);
                     if (hit)
                     {
                         Vector2 strikePoint = new Vector2(mousePos.x, hit.point.y);

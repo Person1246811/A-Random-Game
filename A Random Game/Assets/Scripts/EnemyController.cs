@@ -146,7 +146,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerBullet")
         {
             GetComponents<AudioSource>()[2].Play();
-            hp--;
+            hp = 0;
         }
         //When a car bullet hits the enemy it freezes, changes sprite, then expands, and also hurts the enemy
         if (collision.gameObject.tag == "CarBullet")
